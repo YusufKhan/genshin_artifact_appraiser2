@@ -15,9 +15,6 @@
         },
         "pages/api/getCharacterData.ts": {
             "maxDuration": 60
-        },
-        "lib/updateCache.mjs": {
-            "maxDuration": 60
         }
     }
 }
