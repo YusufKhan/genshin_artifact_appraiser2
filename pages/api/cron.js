@@ -1,6 +1,6 @@
 import { Client } from 'genshin-manager';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     // Your cron job logic here
 
     // autoFetchLatestAssetsByCron is "0 0 0 * * 3" by default
@@ -11,7 +11,7 @@ export default function handler(req, res) {
         assetCacheFolderPath: '/tmp/genshin-manager-cache'
     })
     console.time('ClientUpdate');
-    client.deploy()
+    await client.deploy()
     console.timeEnd('ClientUpdate');
     res.status(200).json({ message: 'Cron job executed successfully' });
     process.exit(0);
