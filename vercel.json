@@ -2,7 +2,22 @@
     "crons": [
         {
             "path": "/api/cron",
-            "schedule": "0 * * * *"
+            "schedule": "0 1 * * *"
         }
-    ]
+    ],
+    "version": 2,
+    "functions": {
+        "app/page.tsx": {
+            "maxDuration": 60
+        },
+        "pages/api/cron.js": {
+            "maxDuration": 60
+        },
+        "pages/api/getCharacterData.ts": {
+            "maxDuration": 60
+        },
+        "lib/updateCache.mjs": {
+            "maxDuration": 60
+        }
+    }
 }
