@@ -3,7 +3,7 @@
 import { CharacterDetail } from 'genshin-manager';
 import React, { useState, useEffect } from 'react';
 
-/* const startingWeights = { //%gain for character damage from one AVERAGE roll
+const startingWeights = { //%gain for character damage from one AVERAGE roll
   //              HP      ATK     DEF     HP%     ATK%    DEF%    CR      CDMG    ER      EM 
   Alhatham: [0, 0.3, 0, 0, 0.8, 0, 2.2, 2.3, 0, 1.1],
   Arlecchino: [0, 0.49, 0, 0, 1.51, 0, 2.95, 2.33, 0, 1.33],
@@ -12,14 +12,14 @@ import React, { useState, useEffect } from 'react';
   Fischl: [0, 0.63, 0, 0, 1.41, 0, 2.62, 2.88, 0, 1.43],
   Furina: [0.93, 0, 0, 2.78, 0, 0, 1.19, 2.58, 0, 0],
   Eula: [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0],
-} */
+}
 
 const HomePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState(''); // Define the uid state
   const [characterData, setCharacterData] = useState<CharacterDetail[]>();
-  const [weights, setWeights] = useState();
+  //const [weights, setWeights] = useState();
   const [error, setError] = useState('');
   //const [data, setData] = useState<(string | number)[][]>([]);  
 
@@ -35,17 +35,23 @@ const HomePage = () => {
       console.error('No saved UID');
     }
 
-    if (savedCharacterData) {
-      setCharacterData(JSON.parse(savedCharacterData));
-    } else {
-      console.error('No saved characters');
-    }
+    try {
+      if (savedCharacterData) {
+        console.log(savedCharacterData)
+        setCharacterData(JSON.parse(savedCharacterData));
+      } else {
+        console.error('No saved characters');
+      }
 
-    //Separate from above so they can be cleared independently
-    if (savedWeights) {
-      setWeights(JSON.parse(savedWeights));
-    } else {
-      console.error('No weights table saved');
+      //Separate from above so they can be cleared independently
+      if ((savedWeights !== undefined && savedWeights !== null)) {
+        console.log(savedWeights)
+        //setWeights(JSON.parse(savedWeights));
+      } else {
+        console.error('No weights table saved');
+      }
+    } catch (error) {
+      console.log(error);
     }
 
   }, []);
@@ -80,11 +86,10 @@ const HomePage = () => {
       setCharacterData(data);
 
       localStorage.setItem('uid', uid); // Cache the UID
-      localStorage.setItem('characterData', JSON.stringify(characterData));
-      localStorage.setItem('weights', JSON.stringify(weights));
+      localStorage.setItem('characterData', JSON.stringify(data));
+      localStorage.setItem('weights', JSON.stringify(startingWeights));
 
       //console.log(characterData);
-      console.log(data[0].name);
 
     } catch (error) {
       setError(String(error));
