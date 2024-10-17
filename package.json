@@ -4,11 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node .//scripts/updateCache.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "start-cron": "node .//scripts/updateCache.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "genshin-manager": "^1.3.5",

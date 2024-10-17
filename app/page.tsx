@@ -97,7 +97,7 @@ const HomePage = () => {
       localStorage.setItem('characterData', JSON.stringify(characterData));
       localStorage.setItem('weightings', JSON.stringify(weights));
 
-      console.log(characterData);
+      //console.log(characterData);
       console.log(data[0].name);
 
     } catch (error) {

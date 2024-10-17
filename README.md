@@ -14,6 +14,6 @@ The weightings can be edited in the table below and submitted for recalculation.
 Future Plans
  - Break down calculation on hover
  - Show team, rotation details
- - Group chracters by artifact set and domain
+ - Group characters by artifact set and domain
  - Display table of off-set pieces
  - Save character list between refreshes (will need character removal feature)
