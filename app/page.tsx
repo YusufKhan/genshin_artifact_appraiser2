@@ -26,7 +26,7 @@ const HomePage = () => {
   useEffect(() => {
     // Load cached data from browser localStorage
     const savedUID = localStorage.getItem('uid');
-    //const savedCharacters = localStorage.getItem('characterData');
+    const savedCharacterData = localStorage.getItem('characterData');
     const savedWeights = localStorage.getItem('weights');
 
     if (savedUID) {
@@ -35,32 +35,18 @@ const HomePage = () => {
       console.error('No saved UID');
     }
 
-    /* if (savedCharacters) {
-      setCharacterData(JSON.parse(savedCharacters));
+    if (savedCharacterData) {
+      setCharacterData(JSON.parse(savedCharacterData));
     } else {
-      console.error('No saved character builds');
-    } */
+      console.error('No saved characters');
+    }
 
     //Separate from above so they can be cleared independently
     if (savedWeights) {
       setWeights(JSON.parse(savedWeights));
     } else {
-      console.error('No custom weights table saved');
+      console.error('No weights table saved');
     }
-
-    /* if (savedData) {
-      /const parsedData = JSON.parse(savedData);
-      const formattedData = parsedData.result.map((item: string[]) => ({
-        name: item[0],
-        values: item.slice(1).map(Number), // Ensure values are numbers
-      }));
-      setCharacterData(JSON.parse(savedData));
-      if (parsedData.teams) {
-        setTeams(parsedData.teams); // Ensure the teams data is correctly set
-      } else {
-        console.error('Teams data is missing in the saved data');
-      }
-    } */
 
   }, []);
 
@@ -95,7 +81,7 @@ const HomePage = () => {
 
       localStorage.setItem('uid', uid); // Cache the UID
       localStorage.setItem('characterData', JSON.stringify(characterData));
-      localStorage.setItem('weightings', JSON.stringify(weights));
+      localStorage.setItem('weights', JSON.stringify(weights));
 
       //console.log(characterData);
       console.log(data[0].name);

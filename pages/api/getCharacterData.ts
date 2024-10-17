@@ -5,14 +5,6 @@ import { getClient } from '../../lib/client'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
 
-    /* const client = new Client({
-      downloadLanguages: ['EN'],
-      autoFetchLatestAssetsByCron: '0 0 0 * * 3',
-    })
-    console.time('ClientUpdate');
-    await client.deploy()
-    console.timeEnd('ClientUpdate'); */
-
     const uid = req.body.uid;
     console.log(uid);
 
