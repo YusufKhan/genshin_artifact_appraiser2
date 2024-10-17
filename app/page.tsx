@@ -37,7 +37,6 @@ const HomePage = () => {
 
     try {
       if (savedCharacterData) {
-        console.log(savedCharacterData)
         setCharacterData(JSON.parse(savedCharacterData));
       } else {
         console.error('No saved characters');
@@ -45,7 +44,6 @@ const HomePage = () => {
 
       //Separate from above so they can be cleared independently
       if ((savedWeights !== undefined && savedWeights !== null)) {
-        console.log(savedWeights)
         //setWeights(JSON.parse(savedWeights));
       } else {
         console.error('No weights table saved');
