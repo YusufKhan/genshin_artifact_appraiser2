@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { EnkaManager } from 'genshin-manager';
 import { getClient } from '../../lib/client'
+import calculateRVs from './calculateRVs'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -11,8 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       await getClient();
       const enkaManager = new EnkaManager();
-      const data = (await enkaManager.fetchAll(uid)).characterDetails;
-      res.status(200).json(data);
+      const allData = (await enkaManager.fetchAll(uid)).characterDetails;
+
+      const rollValueData = calculateRVs(allData) // Maybe make interface for name+artifacts only dataType
+
+      // Respond with the extracted data
+      res.status(200).json(rollValueData);
     }
     catch (enkaError: unknown) {
       if (enkaError instanceof Error) {

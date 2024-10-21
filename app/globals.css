@@ -15,9 +15,14 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('/genshin-impact-ruin-guard-robot.webp');
+  background-size: cover; /* Ensure the image covers the entire screen */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+.text-shadow-lg {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adjust shadow properties as needed */
 }
 
 .loading-screen {
@@ -64,5 +69,5 @@ body {
   /* equivalent to py-3 px-6 */
   text-align: center;
   white-space: nowrap;
-  background-color: white;
+  background-color: var(--bg-color, white); /* Default if var not set */
 }

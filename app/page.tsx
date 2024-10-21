@@ -1,24 +1,11 @@
 'use client';
-
-import { CharacterDetail } from 'genshin-manager';
 import React, { useState, useEffect } from 'react';
-
-const startingWeights = { //%gain for character damage from one AVERAGE roll
-  //              HP      ATK     DEF     HP%     ATK%    DEF%    CR      CDMG    ER      EM 
-  Alhatham: [0, 0.3, 0, 0, 0.8, 0, 2.2, 2.3, 0, 1.1],
-  Arlecchino: [0, 0.49, 0, 0, 1.51, 0, 2.95, 2.33, 0, 1.33],
-  Hutao: [0.62, 0.5, 0, 1.88, 1.07, 0, 3.2, 2.16, 0, 2.36],
-  Shougun: [0, 0.53, 0, 0, 1.34, 0, 2.92, 2.43, 1.1, 0],
-  Fischl: [0, 0.63, 0, 0, 1.41, 0, 2.62, 2.88, 0, 1.43],
-  Furina: [0.93, 0, 0, 2.78, 0, 0, 1.19, 2.58, 0, 0],
-  Eula: [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0],
-}
 
 const HomePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState(''); // Define the uid state
-  const [characterData, setCharacterData] = useState<CharacterDetail[]>();
+  const [characterData, setCharacterData] = useState<(string | number)[][]>([]);
   //const [weights, setWeights] = useState();
   const [error, setError] = useState('');
   //const [data, setData] = useState<(string | number)[][]>([]);  
@@ -80,12 +67,12 @@ const HomePage = () => {
       });
       console.timeEnd('FetchData');
 
-      const data = await response.json() as CharacterDetail[];
+      const data: (string | number)[][] = await response.json();
       setCharacterData(data);
 
       localStorage.setItem('uid', uid); // Cache the UID
       localStorage.setItem('characterData', JSON.stringify(data));
-      localStorage.setItem('weights', JSON.stringify(startingWeights));
+      //localStorage.setItem('weights', JSON.stringify(startingWeights));
 
       //console.log(characterData);
 
@@ -97,82 +84,106 @@ const HomePage = () => {
   };
   return (
     <div className="container mx-auto p-4">
-      <section className="hero flex items-center justify-center text-center bg-gray-900 py-12">
+      <section className="hero flex items-center justify-center text-center bg-transparent py-4">
         <div className="hero-content">
-          <h1 className="text-4xl font-bold text-white">Genshin Impact Artifact Analyzer</h1>
-          <p className="mt-4 text-lg text-white">Analyze and enhance your character&apos;s artifact builds with Enka data.</p>
-          <input
-            type="text"
-            placeholder="Enter UID"
-            value={uid}
-            onChange={(event) => setUid(event.target.value)} // Update the uid state
-            onKeyDown={(event) => {
-              if (event.key === 'Enter') {
-                handleUIDSubmit(uid);
-              }
-            }}
-            autoComplete="on"
-            className="bg-white text-gray-900 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg px-4 py-2 w-full max-w-md"
-          />
-          <button onClick={() => handleUIDSubmit(uid)} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
-            Submit
-          </button>
+          <h1 className="text-4xl font-bold text-white drop-shadow-lg">Genshin Impact Artifact Analyzer</h1>
+
+          <div className="flex justify-center items-center mt-6">
+            <input
+              type="text"
+              placeholder="Enter UID"
+              value={uid}
+              onChange={(event) => setUid(event.target.value)} // Update the uid state
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  handleUIDSubmit(uid);
+                }
+              }}
+              autoComplete="on"
+              className="bg-white text-black text-lg font-semibold text-center border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg px-4 py-2 max-w-sm"
+            />
+            <button onClick={() => handleUIDSubmit(uid)} className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
+              Submit
+            </button>
+          </div>
+
           {loading && (
             <div className="loading-screen">
               <div className="spinner"></div>
               <p className="loading-text">Loading...</p>
             </div>
           )}
+
           {error && (
-            <div className="error-message text-red-500 mt-4">
+            <div className="error-message text-red-500 mt-2">
               <p>{error}</p>
             </div>)}
           {/* </div></form> */}
         </div>
       </section>
       {(
-        <section className="character-section py-8">
-          <h2 className="text-3xl font-semibold text-center text-white mb-2">Character Data</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto bg-black shadow-md rounded-lg">
-              <thead>
-                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Character</th>
-                  <th className="py-3 px-6 text-left">Flower</th>
-                  <th className="py-3 px-6 text-left">Feather</th>
-                  <th className="py-3 px-6 text-left">Sands</th>
-                  <th className="py-3 px-6 text-left">Goblet</th>
-                  <th className="py-3 px-6 text-left">Circlet</th>
-                  <th className="py-3 px-6 text-left">Combined RV</th>
-                </tr>
-              </thead>
-              <tbody>
-                {characterData && (
-                  characterData.map((character, index) => (
-                    <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{character.name}</td>
-                      {character.artifacts.map((artifact, j) => {
-                        /* const red = 255 - Number(value) / 100 * 255;
-                        const green = Number(value) / 100 * 255;
-                        const alpha = 1 - Number(value) / 100;
-                        const color = `rgba(${red},${green},0,${alpha})`; */
-                        return (
-                          <td key={j} className="artifact_cell">
-                            {artifact.subStats[0].value}
-                          </td>
-                        );
-                      })}
+        <section className="character-section py-2">
+          <h2 className="mt-2 mb-4 text-4xl font-bold text-white text-center">Character Data</h2>
+          <div className="overflow-x-auto mx-auto">
+            <div className="w-full max-w-[900px] mx-auto rounded-lg overflow-hidden">
+              {characterData && (
+                <table className="table-auto w-full">
+                  <thead className="bg-gray-600">
+                    <tr className="text-white uppercase">
+                      <th className="py-3 px-6 text-center font-semibold border-r border-gray-300">Character</th>
+                      <th className="py-3 px-6 text-center border-r border-gray-300">Flower</th>
+                      <th className="py-3 px-6 text-center border-r border-gray-300">Feather</th>
+                      <th className="py-3 px-6 text-center border-r border-gray-300">Sands</th>
+                      <th className="py-3 px-6 text-center border-r border-gray-300">Goblet</th>
+                      <th className="py-3 px-6 text-center border-r border-gray-300">Circlet</th>
+                      <th className="py-3 px-6 text-center">Combined</th>
                     </tr>
-                  )))}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {characterData && (
+                      characterData.map((character, index) => (
+                        <tr key={index} className="border-t border-gray-300 hover:bg-gray-200 bg-white">
+                          <td className="py-3 px-6 text-center text-white font-semibold uppercase whitespace-nowrap bg-gray-600">
+                            {character[0]}
+                          </td>                          {character.slice(1).map((rv, j) => { // Remove name from array
+                            const red = 255 - Number(rv) / 100 * 255;
+                            const green = Number(rv) / 100 * 255;
+                            const alpha = Math.exp(-2.73 * Number(rv) / 100);
+                            const bgColor = `rgba(${red},${green},0,${alpha})`;
+
+                            return (
+                              <td key={j} className="artifact-cell font-semibold" style={{ backgroundColor: bgColor }}>
+                                {rv}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      )))}
+                  </tbody>
+                </table>
+              )}
+            </div>
           </div>
         </section>
       )}
-      <h2 className="mt-6 text-3xl font-semibold text-center text-white">Editable Weights</h2>
-      <div className="overflow-x-auto">
+
+      <div className="bg-gray-600 mx-auto p-2 rounded-lg mt-6 max-w-2xl">
+        <p className="text-sm font-semibold text-white text-center">
+          How it works:
+        </p>
+        <p className="text-sm text-white text-left ml-1">
+          <ul className="list-disc ml-4 mt-1 space-y-2">
+            <li>Characters have a table with weightings based on how much a substat has/will increase their total damage.</li>
+            <li>The starting values for a character come from their most popular team and rotation.</li>
+            <li>The weightings are used to calculate a maximum value for an artifact slot, and the equipped artifact strength is given as a percentage of that maximum.</li>
+            <li>Characters are then ranked by an average gear score.</li>
+          </ul></p>
+      </div>
+
+      <h2 className="mt-8 mb-4 text-4xl font-bold text-white text-center">Editable Weights</h2>
+      <div className="overflow-x-auto mx-auto">
         {characterData && (
-          <table className="min-w-full table-auto bg-blue shadow-md rounded-lg">
+          <table className="table-auto bg-blue shadow-md rounded-lg min-w-min mx-auto">
             <thead>
               <tr className="bg-gray-200 text-gray-600 text-sm uppercase leading-normal">
                 <th className="py-3 px-6 text-left">Character</th>
@@ -211,7 +222,7 @@ const HomePage = () => {
         )}
       </div>
       <div className="flex justify-center mt-4">
-        <button onClick={() => handleUIDSubmit(uid)} className="px-4 py-2 bg-blue-500 text-white rounded">
+        <button onClick={() => handleUIDSubmit(uid)} className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
           Update
         </button>
       </div>
