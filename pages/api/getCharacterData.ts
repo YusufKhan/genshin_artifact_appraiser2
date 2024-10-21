@@ -15,8 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const allData = (await enkaManager.fetchAll(uid)).characterDetails;
 
       const rollValueData = calculateRVs(allData) // Maybe make interface for name+artifacts only dataType
-
-      // Respond with the extracted data
       res.status(200).json(rollValueData);
     }
     catch (enkaError: unknown) {
