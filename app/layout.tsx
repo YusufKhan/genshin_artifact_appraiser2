@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Head from "next/head";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -17,6 +16,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Genshin Artifact Appraiser",
   description: "Customized roll value calculations for every character team",
+  icons: {
+    icon: "/Icon_Circlet_of_Logos.ico",
+  },
 };
 
 export default function RootLayout({
@@ -26,12 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
