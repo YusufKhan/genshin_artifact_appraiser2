@@ -1,3 +1,4 @@
+// Vercel specific cron job
 import { Client } from 'genshin-manager';
 
 export default async function handler(req, res) {
@@ -10,9 +11,9 @@ export default async function handler(req, res) {
         downloadLanguages: ['EN'],
         assetCacheFolderPath: '/tmp/genshin-manager-cache'
     })
-    console.time('ClientUpdate');
+    console.time('ClientUpdate cron');
     await client.deploy()
-    console.timeEnd('ClientUpdate');
+    console.timeEnd('ClientUpdate cron');
     res.status(200).json({ message: 'Cron job executed successfully' });
     process.exit(0);
 }
