@@ -7,6 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
 
     const uid = req.body.uid;
+    const teams = req.body.weights;
+    console.log("Obtained from body");
     console.log(uid);
 
     try {
@@ -14,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const enkaManager = new EnkaManager();
       const allData = (await enkaManager.fetchAll(uid)).characterDetails;
 
-      const rollValueData = calculateRVs(allData) // Maybe make interface for name+artifacts only dataType
+      const rollValueData = calculateRVs(allData, teams) // Maybe make interface for name+artifacts only dataType
       res.status(200).json(rollValueData);
     }
     catch (enkaError: unknown) {

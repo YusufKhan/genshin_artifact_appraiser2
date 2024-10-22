@@ -53,7 +53,7 @@ const HomePage = () => {
       if (savedUID) {
         setUid(savedUID);
       } else {
-        console.error('No saved UID');
+        console.info('No saved UID');
       }
 
       if (savedCharacterData) {
@@ -65,7 +65,6 @@ const HomePage = () => {
       //Separate from above so they can be cleared independently
       if ((savedWeights !== undefined && savedWeights !== null && savedWeights !== "undefined")) {
         setWeights(JSON.parse(savedWeights));
-        console.log(savedWeights);
       } else {
         console.info('No weights table saved');
         const weightsTable = new weightsStartingTable();
@@ -108,7 +107,7 @@ const HomePage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ uid }),
+        body: JSON.stringify({ uid, weights }),
       });
       console.timeEnd('FetchData');
 
@@ -117,8 +116,6 @@ const HomePage = () => {
 
       localStorage.setItem('uid', uid); // Cache the UID
       localStorage.setItem('characterData', JSON.stringify(data));
-
-      console.log(weights);
       localStorage.setItem('weights', JSON.stringify(weights));
 
     } catch (error) {
