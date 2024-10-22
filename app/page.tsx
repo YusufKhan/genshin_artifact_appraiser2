@@ -187,7 +187,7 @@ const HomePage = () => {
         </p>
         <ul className="list-disc ml-4 mt-1 space-y-2 text-white">
           <li>Characters have a table with weightings based on how much a substat has/will increase their total damage.</li>
-          <li>The starting values for a character come from their most popular team and rotation but thos weights can be adjusted below.</li>
+          <li>The starting values for a character come from their most popular team and rotation but those weights can be adjusted below.</li>
           <li>The weightings are used to calculate a maximum value for an artifact slot, and the equipped artifact strength is given as a percentage of that maximum.</li>
           <li>Characters are then ranked by an average gear score.</li>
           <li>Character and your edited weights table is stored on your browser</li>

@@ -18,6 +18,8 @@ body {
   background-image: url('/genshin-impact-ruin-guard-robot.webp');
   background-size: cover; /* Ensure the image covers the entire screen */
   background-position: center; /* Center the image */
+  min-height: 100vh;
+  min-width: 100vh;
   background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
