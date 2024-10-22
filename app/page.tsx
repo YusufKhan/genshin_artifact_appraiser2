@@ -1,5 +1,5 @@
 'use client';
-import weightsStartingTable from '@/lib/weightsStartingTable';
+import weightsStartingTable from '..//lib/weightsStartingTable'
 import React, { useState, useEffect } from 'react';
 
 interface Teams {
@@ -11,7 +11,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState(''); // Define the uid state
   const [characterData, setCharacterData] = useState<(string | number)[][]>([]);
-  const [weights, setWeights] = useState<Teams>();
+  const [weights, setWeights] = useState<Teams | undefined>(undefined);
   const [error, setError] = useState('');
   //const [data, setData] = useState<(string | number)[][]>([]);  
 
@@ -72,6 +72,7 @@ const HomePage = () => {
 
     console.timeEnd("Loading");
 
+    if (typeof window !== 'undefined') {
     try {
       console.time('FetchData');
       const response = await fetch('api/getCharacterData', {
@@ -95,6 +96,7 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
+  }
   };
   return (
     <div className="container mx-auto p-4">
@@ -151,7 +153,7 @@ const HomePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {characterData && (
+                    {characterData.length > 0 && (
                       characterData.map((character, index) => (
                         <tr key={index} className="border-t border-gray-300 hover:bg-gray-200 bg-white">
                           <td className="py-3 px-6 text-center text-white font-semibold uppercase whitespace-nowrap bg-gray-600">
@@ -194,7 +196,7 @@ const HomePage = () => {
 
       <h2 className="mt-8 mb-4 text-4xl font-bold text-white text-center">Editable Weights</h2>
       <div className="overflow-x-auto mx-auto">
-        {characterData && (
+        {characterData.length>0 && (
           <table className="w-full max-w-[900px] mx-auto rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-600 text-white uppercase leading-normal ">
