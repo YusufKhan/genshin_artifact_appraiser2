@@ -1,3 +1,4 @@
+// Vercel specific cron job
 import { Client } from 'genshin-manager';
 
 export default async function handler(req, res) {
