@@ -1,7 +1,7 @@
 // Just get Enka data
 import { NextApiRequest, NextApiResponse } from 'next';
 import { EnkaManager } from 'genshin-manager';
-import { getClient } from '../../lib/client'
+import { getClient } from '../../utils/client'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {

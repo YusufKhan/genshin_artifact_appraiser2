@@ -11,6 +11,8 @@ The weightings are used to calculate a maximum value for an artifact slot, and t
 Characters are then ranked by an average gear score.
 
 Future Plans
+ - Get vary tall image
+ - Split getCharacterData and push to rolls calc
  - Move weights data structure to JSON file
  - Only show Enka character weights
  - Squash commits
