@@ -1,10 +1,8 @@
-import { CharacterDetail } from "genshin-manager";
+import { CharacterDetail, StatProperty } from "genshin-manager";
 
 interface Teams { [charName: string]: number[]; }
 
 export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
-
-    console.log("calculateRVs");
 
     const substatMaxValues = {
         "FIGHT_PROP_HP": 298.75,
@@ -20,19 +18,6 @@ export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
     }
     type SubstatKeys = keyof typeof substatMaxValues;
 
-    // @formatter:off
-    /* const teams: Teams = { //%gain for character damage from one AVERAGE roll
-        //              HP      ATK     DEF     HP%     ATK%    DEF%    CR      CDMG    ER      EM 
-        Alhaitham: [0, 0.3, 0, 0, 0.8, 0, 2.2, 2.3, 0, 1.1],
-        Arlecchino: [0, 0.49, 0, 0, 1.51, 0, 2.95, 2.33, 0, 1.33],
-        'Hu Tao': [0.62, 0.5, 0, 1.88, 1.07, 0, 3.2, 2.16, 0, 2.36],
-        Shougun: [0, 0.53, 0, 0, 1.34, 0, 2.92, 2.43, 1.1, 0],
-        Fischl: [0, 0.63, 0, 0, 1.41, 0, 2.62, 2.88, 0, 1.43],
-        Furina: [0.93, 0, 0, 2.78, 0, 0, 1.19, 2.58, 0, 0],
-        Eula: [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0],
-    } */
-    // @formatter:on
-
     const allCharacterRVs: (string | number)[][] = [];
 
     //Iterate through each character
@@ -43,11 +28,11 @@ export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
         const artifacts = target.artifacts;
 
         if (!teams.hasOwnProperty(charName)) {
-            console.log("Team multipliers not specified for ", charName);
+            //console.log("Team multipliers not specified for ", charName);
             continue;
         }
         if (artifacts.length < 5) {
-            console.log("Missing artifacts for ", charName);
+            //console.log("Missing artifacts for ", charName);
             continue;
         }
 
@@ -57,8 +42,10 @@ export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
         let characterTotal = 0;
 
         for (let i = 0; i < 5; i++) {
-            const rv = artifacts[i].subStats.map(stat => {
+            const rv = artifacts[i].subStats.map(statRaw => {
+                const stat = statRaw as StatProperty
                 const substatType = stat.type.toString() as SubstatKeys;
+                //console.log(substatType);
 
                 // Handle invalid substat type
                 if (!(substatType in substatMaxValues)) {
@@ -66,14 +53,20 @@ export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
                     return 0;
                 }
 
-                // const max = substatMaxValues[substatType];
-                const multipliedValue = stat.multipliedValue; // Normalizes if percentage
+                let multipliedStat = 0;
+                if (stat.isPercent) {
+                    multipliedStat = stat.value * 100
+                }
+                else {
+                    multipliedStat = stat.value;
+                }
+
                 const substatIndex = Object.keys(substatMaxValues).indexOf(substatType);
 
                 const meanValue = substatMaxValues[substatType] * 0.85;
                 const multiplier = teams[charName]?.[substatIndex] ?? 0;
 
-                return (multipliedValue / meanValue) * multiplier;
+                return (multipliedStat / meanValue) * multiplier;
             })
                 .reduce((a, b) => { return a + b; }, 0);
 
@@ -90,11 +83,13 @@ export default function calculateRVs(data: CharacterDetail[], teams: Teams) {
 
             //Calc the max RV for this slot, scaled Mean roll increase to max
             const thisRVMax = (6 * removedSlot[0] + removedSlot[1] + removedSlot[2] + removedSlot[3]) / 0.85;
+            //console.log(thisRVMax);
             thisCharactersRVs.push((rv / thisRVMax * 100).toFixed(0)); // Add artifact RV/max % to the line
             characterTotal += rv / thisRVMax * 100;
             //console.log(i, " ", rv.toFixed(0), "\t", thisRVMax.toFixed(0));
         }
         thisCharactersRVs.push((characterTotal / 5).toFixed(0));
+        //console.log(thisCharactersRVs);
         allCharacterRVs.push(thisCharactersRVs);
         //console.log(characterTotal);
     }
