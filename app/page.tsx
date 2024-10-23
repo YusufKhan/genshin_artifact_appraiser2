@@ -72,7 +72,8 @@ const HomePage = () => {
 
   const handleSubmit = async () => {
     const data = await getCharacterData(uid, setUid, setError, setLoading);
-    const newRollValues = await calculateRVs(data, weights);
+    const newRollValues = calculateRVs(data, weights);
+    localStorage.setItem('rollValues', JSON.stringify(newRollValues));
     setCharacterData(data);
     setRollValues(newRollValues);
     setButtonDisabled(false);
