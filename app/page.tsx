@@ -1,142 +1,98 @@
 'use client';
 import { CharacterDetail } from 'genshin-manager';
 import React, { useState, useEffect } from 'react';
-
-interface Teams {
-  [charName: string]: number[];
-}
+import { calculateRVs } from '@/utils/calcRVs';
+import { handleChange, getCharacterData, onClick, WeightsTable } from '@/utils/homeUtils';
 
 const HomePage = () => {
 
+  // =========================
+  // State and Variables
+  // =========================
   const [loading, setLoading] = useState(false); // Loading circle
   const [uid, setUid] = useState(''); // UID fed to getCharacterData
   const [characterData, setCharacterData] = useState<CharacterDetail[]>([]); // Received from getCharacterData
-  const [weights, setWeights] = useState<Teams | undefined>(undefined); // For resetting weights with button
-  const [setWeightsTrigger, setWeightsSet] = useState(false); // Action triggers await handling of update in useEffect
+  const [weights, setWeights] = useState<WeightsTable>({}); // For resetting weights with button
+  //const [setWeightsTrigger, setWeightsSet] = useState(false); // Action triggers await handling of update in useEffect
   const [rollValues, setRollValues] = useState<(string | number)[][]>([]); // The final character RV table
   const [error, setError] = useState('');
+  //const [message, setMessage] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-
-    if (setWeightsTrigger) { // Hook to reset weights
-      console.log("Reloading and not retrieving weights table from storage");
-      const weightsTable = new weightsStartingTable();
-      localStorage.setItem('weights', JSON.stringify(weightsTable.teams));
-      setWeightsSet(false);
+    const savedUID = localStorage.getItem('uid') || '';
+    setUid(savedUID);
+    if (savedUID) {
+      console.info('Stored UID loaded');
+    } else {
+      console.info('No UID found in storage');
     }
-
-    else {
-      // Load cached data from browser localStorage
-      const savedUID = localStorage.getItem('uid');
-      const savedCharacterData = localStorage.getItem('characterData');
-      const savedRVs = localStorage.getItem('rollValues')
-      const savedWeights = localStorage.getItem('weights');
-
-      try {
-
-        if (savedUID) {
-          setUid(savedUID);
-          console.info('Stored UID loaded');
-        }
-
-        if (savedCharacterData) {
-          setCharacterData(JSON.parse(savedCharacterData));
-          console.info('Stored characters loaded');
-        }
-
-        if (savedRVs) {
-          setRollValues(JSON.parse(savedRVs));
-          console.info('Stored RV table loaded');
-        }
-
-        //Separate from above so they can be cleared independently
-        if (savedWeights) {
-          setWeights(JSON.parse(savedWeights));
-          console.info('Stored weights table loaded');
-        } else {
-          console.info('No weights table saved. Loading default');
-          const weightsTable = new weightsStartingTable(); // Setting weights table to default
-          setWeights(weightsTable.teams);
-        }
-
-      } catch (error) {
-        console.log(error);
-      }
+    const savedCharacterData = localStorage.getItem('characterData') || '';
+    if (savedCharacterData) {
+      setCharacterData(JSON.parse(savedCharacterData));
+      console.info('Stored characters loaded');
+    } else {
+      setCharacterData([]);
+      console.info('No character data found in storage');
     }
-  }, [setWeightsTrigger, setWeightsSet]);
-
-  const handleChange = (character: string, index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    // Handle change in a cell of the weights table
-    const newValue = event.target.value;
-    setWeights((prevWeights) => {
-      if (!prevWeights) {
-        console.error('prevWeights is null or undefined');
-        return prevWeights; // Should always be defined due to useEffect logic
-      }
-      const updatedCharacter = [...prevWeights[character]];
-      updatedCharacter[index] = parseFloat(newValue);
-
-      return { ...prevWeights, [character]: updatedCharacter };
-    });
-  }
-
-  const updateRVs = async () => {
-    const response = await fetch('api/requestCalcRVs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ characterData, weights }),
-    });
-
-    const updatedRVs: (string | number)[][] = await response.json();
-
-    setRollValues(updatedRVs);
-    localStorage.setItem('rollValues', JSON.stringify(updatedRVs));
-    return updatedRVs;
-  }
-
-  const handleUIDSubmit = async (uid: string) => {
-    setUid(uid)
-    setError("")
-    setLoading(true);
-
-    if (typeof window !== 'undefined') {
-
-      try {
-
-        console.time("Fetch Enka data")
-        const response = await fetch('api/getCharacterData', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ uid }),
-        });
-        console.timeEnd('Fetch Enka data');
-
-        const newCharacterData: CharacterDetail[] = await response.json();
-        setCharacterData(newCharacterData);
-
-        const newRollValues = await updateRVs();
-        setRollValues(newRollValues);
-
-        console.log({ characterData, weights, rollValues });
-
-        localStorage.setItem('uid', uid);
-        localStorage.setItem('characterData', JSON.stringify(newCharacterData));
-        localStorage.setItem('rollValues', JSON.stringify(newRollValues));
-
-      } catch (error) {
-        setError(String(error));
-
-      } finally {
-        setLoading(false);
-      }
-
+    const savedRVs = localStorage.getItem('rollValues') || '';
+    if (savedRVs) {
+      setRollValues(JSON.parse(savedRVs));
+      console.info('Stored RV table loaded');
+    } else {
+      setRollValues([]);
+      console.info('No roll values found in storage');
     }
+    const weightsTable = new weightsStartingTable();
+    const savedWeights = localStorage.getItem('weights');
+    if (savedWeights) {
+      setWeights(JSON.parse(savedWeights));
+      console.info('Saved weights table loaded');
+    } else {
+      setWeights(weightsTable.teams);
+      console.info('Default weights table loaded');
+    }
+  }, []);
+
+  // =========================
+  // Event Handlers
+  // =========================
+  const handleRecalc = () => {
+    onClick(uid, setUid, setError, setLoading, setCharacterData, weights, setRollValues);
   };
 
+  const handleResetWeights = () => {
+    const weightsTable = new weightsStartingTable();
+    localStorage.setItem('weights', JSON.stringify(weightsTable.teams));
+    setWeights(weightsTable.teams);
+    //setRollValues(calculateRVs(characterData, weights));
+    onClick(uid, setUid, setError, setLoading, setCharacterData, weightsTable.teams, setRollValues);
+  };
+
+  const handleSubmit = async () => {
+    const data = await getCharacterData(uid, setUid, setError, setLoading);
+    const newRollValues = await calculateRVs(data, weights);
+    setCharacterData(data);
+    setRollValues(newRollValues);
+    setButtonDisabled(false);
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+    setRollValues([]);
+    setCharacterData([]);
+    //setMessage('Local storage cleared');
+    setButtonDisabled(true);
+  };
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  }
+
+  // =========================
+  // Render
+  // =========================
   return (
 
     <div className="container mx-auto p-4">
@@ -154,16 +110,12 @@ const HomePage = () => {
               onChange={(event) => setUid(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === 'Enter') { // Enter or click to submit
-                  handleUIDSubmit(uid);
+                  handleSubmit();
                 }
               }} // Input text box design
               className="bg-white text-black text-lg font-semibold text-center border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg px-4 py-2 max-w-sm" />
 
-            <button
-              onClick={() =>
-                handleUIDSubmit(uid)
-              }
-              className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
+            <button onClick={handleSubmit} className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
               Submit
             </button>
           </div>
@@ -211,7 +163,7 @@ const HomePage = () => {
                         {character.slice(1).map((rv, artifactSlot) => { // Remove name from array then make row of colored RVs
                           const red = 255 - Number(rv) / 100 * 255; // Lower number is more red
                           const green = Number(rv) / 100 * 255;
-                          const alpha = Math.exp(-2.71828 * Number(rv) / 100); // Euler number log scaling alpha up with lower number
+                          const alpha = Math.exp(-2.71828 * Number(rv) / 100); // Euler number log scaling. Alpha up with lower number
                           const bgColor = `rgba(${red},${green},0,${alpha})`;
                           const borderStyle = artifactSlot === character.length - 2 ? '2px solid #172554' : 'none';
                           return ( // RV value and color
@@ -228,17 +180,24 @@ const HomePage = () => {
         </div>
       </section>
 
-      <div className="bg-gray-600 mx-auto p-4 mt-6 max-w-2xl rounded-lg ">
-        <p className="font-semibold text-white text-center">
-          How it works:
-        </p>
-        <ul className="list-disc p-6 space-y-2 text-white">
-          <li>Characters have a table with weightings based on how much a single max value substat roll has/will increase their total damage.</li>
-          <li>The starting values for a character come from their most popular team and rotation but those weights can be adjusted below.</li>
-          <li>The weightings are used to calculate a maximum value for an artifact slot, and the equipped artifact strength is given as a percentage of that maximum.</li>
-          <li>Characters are then ranked by an average gear score.</li>
-          <li>Character data, this roll values table and your edited weights table are stored on your browser</li>
-        </ul>
+      <div className="bg-gray-600 mx-auto p-4 mt-6 max-w-2xl rounded-lg">
+        <div onClick={toggleExpand} className="flex justify-center items-center cursor-pointer">
+          <p className="font-semibold text-white text-center">
+            How it works:
+          </p>
+          <span className={`ml-2 transform transition-transform ${isExpanded ? 'rotate-180' : 'rotate-0'}`} style={{ color: 'white' }}>
+            ▼
+          </span>
+        </div>
+        {isExpanded && (
+          <ul className="list-disc p-6 space-y-2 text-white">
+            <li>Characters have a table with weightings based on how much a single max value substat roll has/will increase their total damage.</li>
+            <li>The starting values for a character come from their most popular team and rotation but those weights can be adjusted below.</li>
+            <li>The weightings are used to calculate a maximum value for an artifact slot, and the equipped artifact strength is given as a percentage of that maximum.</li>
+            <li>Characters are then ranked by an average gear score.</li>
+            <li>Character data, this roll values table and your edited weights table are stored on your browser</li>
+          </ul>
+        )}
       </div>
 
       <h2 className="mt-8 mb-4 text-4xl font-bold text-white text-center">Editable Weights</h2>
@@ -272,7 +231,7 @@ const HomePage = () => {
                         <input
                           type="number"
                           value={value}
-                          onChange={(event) => handleChange(character, index, event)}
+                          onChange={(event) => handleChange(character, index, event, setWeights)}
                           onWheel={(event) => event.currentTarget.blur()}
                           aria-label="Character damage % improvement for substat: "
                           className="w-full text-white text-center m-0 h-full border-t"
@@ -289,32 +248,41 @@ const HomePage = () => {
         )}
       </div>
       <div className="flex justify-center mt-4">
-
         <button
           onClick={() => {
-            updateRVs();
+            handleRecalc();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className="px-4 py-2 m-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
           Recalculate RVs
         </button>
 
+
+      </div>
+
+      <div className="flex justify-center mt-4 mb-4">
         <button
           onClick={() => {
-            setWeightsSet(true);
-            updateRVs();
+            handleResetWeights();
           }}
-          className="px-4 py-2 m-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold">
+          className="px-4 py-2 mr-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-200 text-lg font-semibold">
           Reset weights
         </button>
 
+        <button
+          onClick={clearLocalStorage}
+          className={`ml-4 px-4 py-2 ${buttonDisabled ? 'bg-gray-400' : 'bg-red-500'} text-white rounded-lg ${buttonDisabled ? '' : 'hover:bg-red-600'} focus:ring-2 focus:ring-red-200 text-lg font-semibold`}
+          disabled={buttonDisabled}>
+          {buttonDisabled ? 'Cleared' : 'Clear Characters'}
+        </button>
       </div>
+
     </div>
   );
 };
 
 class weightsStartingTable {
-  public teams: Teams;
+  public teams: WeightsTable;
 
   constructor() {
     this.teams = {
@@ -327,7 +295,7 @@ class weightsStartingTable {
       Eula: [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0]
     };
   }
-  getTeams(): Teams {
+  getTeams(): WeightsTable {
     return this.teams;
   }
 }
