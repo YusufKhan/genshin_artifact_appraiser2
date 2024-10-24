@@ -12,15 +12,15 @@ Characters are then ranked by an average gear score.
 
 Future Plans
  - Get vary tall image
- - Split getCharacterData and push to rolls calc
+ - Add footer with GitHub link
+ - Pull data from Enka account
+        Add extra weights entry for custom build
+        Maybe display saved builds only checkbox or just delete a showcase non-meta character
  - Move weights data structure to JSON file
  - Only show Enka character weights
  - Squash commits
- - Change function order in page
  - Alternating color weights table rows
- - Editable weightings table and submit for recalculation
  - Break down calculation on hover
  - Show team, rotation details
  - Group characters by artifact set and domain
  - Display table of off-set pieces
- - Save character list between refreshes (will need character removal feature)
