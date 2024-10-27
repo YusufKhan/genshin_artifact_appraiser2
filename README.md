@@ -1,26 +1,20 @@
-This tool was primarily created to find where a Sanctifying Elixir can best be used.
-It can also help with artifact farming priority.
+This app finds the value of an artifact compared to an artifact with max rolls and perfect substats. It uses an editable weights table which which is a set of percentages showing how much a max roll substat has/will increase a character's total damage.
+See the page file or the live web-page for usage information.
 
-The main feature is a Roll Value calculator that uses custom weightings to show artifact strength in specific teams.
-These roll values should only be compared across characters with high investment (200 CV+) and balanced crit ratios.
+Basic player data is pulled directly from Enka.Network without the use of any wrapper.
 
-How it works:
-Characters have a table with weightings based on how much a substat has/will increase their total damage.
-The starting values for a character come from their most popular team and rotation.
-The weightings are used to calculate a maximum value for an artifact slot, and the equipped artifact strength is given as a percentage of that maximum.
-Characters are then ranked by an average gear score.
+The loc (localization) and character files are not needed here since the data has already been processed into JSON weights file.
 
 Future Plans
- - Get vary tall image
- - Add footer with GitHub link
- - Pull data from Enka account
-        Add extra weights entry for custom build
-        Maybe display saved builds only checkbox or just delete a showcase non-meta character
- - Move weights data structure to JSON file
- - Only show Enka character weights
- - Squash commits
- - Alternating color weights table rows
- - Break down calculation on hover
- - Show team, rotation details
- - Group characters by artifact set and domain
- - Display table of off-set pieces
+
+- Add TTL check, or some cache lifespan
+- Improve background
+- Add footer with GitHub link
+- Alternating color weights table rows
+- Break down calculation on hover
+- Link to Enka for specified UID
+- Pull saved builds from Enka account
+- Add extra weights entry for saved builds
+- Show team, rotation details / saved to Enka build name
+- Group characters by artifact set and domain
+- Display table of off-set pieces
