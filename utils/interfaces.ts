@@ -5,6 +5,7 @@ export interface WeightsData {
 export interface CharacterWeights {
   weights: number[];
   name: string;
+  energyNeeded: number;
 }
 
 export interface CharacterRollValues {
