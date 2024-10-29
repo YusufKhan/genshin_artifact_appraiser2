@@ -43,6 +43,7 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
       weights[charId] = {
         weights: [0, 0.0, 0, 0.0, 0.0, 0, 2.3, 2.3, 0.0, 0.0],
         name: "Unknown char: Def weights \n" + charId,
+        energyNeeded: 20,
       };
     }
 
