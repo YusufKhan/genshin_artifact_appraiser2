@@ -11,7 +11,6 @@ Future Plans
 - Add some compensation for ER required
 - Add TTL check, or some cache lifespan
 - Improve background
-- Add footer with GitHub link
 - Alternating color weights table rows
 - Link to Enka for specified UID
 - Pull saved builds from Enka account
