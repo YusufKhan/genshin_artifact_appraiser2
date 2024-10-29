@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "Genshin Artifact Appraiser",
   description: "Customized roll value calculations for every character team",
   icons: {
-    icon: "/Icon_Circlet_of_Logos.ico",
+    icon: "/favicon.ico",
   },
 };
 
