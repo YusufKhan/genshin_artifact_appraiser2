@@ -6,14 +6,14 @@ export default async function handler(
 ) {
   try {
     const uid = req.query.uid;
-    console.log(`https://enka.network/api/uid/${uid}`);
+    //console.log(`https://enka.network/api/uid/${uid}`);
     const response = await fetch(`https://enka.network/api/uid/${uid}`, {
       headers: {
         "User-Agent": "genshin_artifact_appraiser_${uid}",
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
+    //console.log(response);
     if (!response.ok) {
       switch (response.status) {
         case 400:

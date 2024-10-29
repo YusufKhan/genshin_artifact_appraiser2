@@ -11,6 +11,7 @@ export interface CharacterRollValues {
   rollValues: string[];
   name: string;
   id: string;
+  calcBreakdown: string[];
 }
 
 export interface UserData {

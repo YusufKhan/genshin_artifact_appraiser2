@@ -71,16 +71,18 @@ const HomePage = () => {
     newCharacterData: UserData,
     newWeights: WeightsData
   ) => {
-    const newTeamData = calculateRVs(newCharacterData, newWeights);
-    const newRollValues = newTeamData.allCharacterRVs;
-    const updatedWeights = newTeamData.weights;
+    if (newCharacterData.avatarInfoList) {
+      const newTeamData = calculateRVs(newCharacterData, newWeights);
+      const newRollValues = newTeamData.allCharacterRVs;
+      const updatedWeights = newTeamData.weights;
 
-    localStorage.setItem("rollValues", JSON.stringify(newRollValues));
-    setRollValues(newRollValues);
-    localStorage.setItem("weights", JSON.stringify(updatedWeights));
-    setWeights(updatedWeights);
-    setButtonDisabled(false);
-    return newRollValues;
+      localStorage.setItem("rollValues", JSON.stringify(newRollValues));
+      setRollValues(newRollValues);
+      localStorage.setItem("weights", JSON.stringify(updatedWeights));
+      setWeights(updatedWeights);
+      setButtonDisabled(false);
+      return newRollValues;
+    }
   };
 
   const toggleExpand = () => {
@@ -162,7 +164,7 @@ const HomePage = () => {
 
       <section className="character-section py-2">
         <h2 className="mt-2 mb-4 text-4xl font-bold text-white text-center">
-          Character Artifact % of Max
+          Artifact RVs: % of Max
         </h2>
         <div className="overflow-x-auto mx-auto">
           <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg">
@@ -211,6 +213,9 @@ const HomePage = () => {
                             artifactSlot === character.rollValues.length - 1
                               ? "2px solid #172554"
                               : "none";
+
+                          const calcBreakdown =
+                            character.calcBreakdown[artifactSlot] || ""; // Your array of descriptions
                           return (
                             // RV value and color
                             <td
@@ -221,6 +226,7 @@ const HomePage = () => {
                                 borderLeft: borderStyle,
                                 borderRight: borderStyle,
                               }}
+                              title={calcBreakdown} // Hover label for 5 artifacts
                             >
                               {rv}
                             </td>
@@ -253,13 +259,26 @@ const HomePage = () => {
         {isExpanded && (
           <ul className="list-disc p-6 space-y-2 text-white">
             <li>
-              Characters have an editable table with weights based on how much a
-              max value roll of each substat has/will increase their total
-              damage. The weightings are used to calculate a maximum value for
-              an artifact slot, and the equipped artifact strength is given as a
-              percentage of that maximum. Characters are then ranked by an
-              average gear score. Character data as well as the roll values and
-              edited weights tables are stored on your browser.
+              This app calculates an artifact roll value as a percentage of that
+              artifact vs one with perfect substats and max rolls, but the same
+              mainstat.
+            </li>
+            <li>
+              The roll values are weighted by the importance of each substat.
+              The substat weights equal the % total DMG increase a max roll
+              provides. Each character has an editable row of weights in the
+              table below.
+            </li>
+            <li>
+              Hover over the final value to see a breakdown of the calculation.
+            </li>
+            <li>
+              Finally, characters and their weights entries are ranked by
+              average gear score.
+            </li>
+            <li>
+              Character data, as well as the roll values and edited weights, are
+              stored on your browser.
             </li>
           </ul>
         )}
@@ -333,7 +352,7 @@ const HomePage = () => {
               console.error("userData is undefined");
             }
           }}
-          className="px-4 py-2 m-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
+          className="px-4 py-2 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
         >
           Recalculate RVs
         </button>
