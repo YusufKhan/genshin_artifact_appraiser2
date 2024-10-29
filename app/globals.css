@@ -91,13 +91,6 @@ body {
   background-color: var(--bg-color, white); /* Default if var not set */
 }
 
-table,
-tbody,
-tr,
-td {
-  height: 100%;
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -106,9 +99,51 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  background-color: #172554;
+  height: 100%;
+  width: 100%;
 }
 
-input[type="number"]:focus {
-  border: 2px solid #00f; /* Change to your preferred color */
-  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Subtle shadow effect */
+.custom-table {
+  height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0; /* Avoids gaps between cells */
+  border-radius: 12px;
+  overflow: hidden; /* Ensures the rounded corners are visible */
+}
+
+.custom-table th,
+.custom-table td {
+  height: 100%;
+  vertical-align: middle;
+  background-color: #172554;
+  box-sizing: border-box;
+}
+
+.custom-table th {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table td {
+  text-align: center;
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table td:first-child {
+  width: 10rem;
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.custom-table td:last-child {
+  width: 7rem;
+}
+
+.custom-input {
+  border: 2px solid transparent; /* Transparent by default */
+  outline: none; /* Remove default outline */
 }

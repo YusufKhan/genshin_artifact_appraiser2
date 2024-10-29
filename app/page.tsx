@@ -130,7 +130,7 @@ const HomePage = () => {
         </div>
 
         <div className="hero-content">
-          <h1 className="text-4xl font-bold text-white drop-shadow-lg">
+          <h1 className="text-4xl font-bold text-gray-200 drop-shadow-lg">
             Genshin Impact Artifact Analyzer
           </h1>
 
@@ -146,12 +146,12 @@ const HomePage = () => {
                   handleSubmit(uid, weights);
                 }
               }} // Input text box design
-              className="bg-white text-black text-lg font-semibold text-center border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg px-4 py-2 max-w-sm"
+              className="text-gray-100 text-lg text-center border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-lg px-4 py-2 max-w-sm"
             />
 
             <button
               onClick={() => handleSubmit(uid, weights)}
-              className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
+              className="ml-4 px-4 py-2 bg-blue-500 text-gray-100 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
             >
               Submit
             </button>
@@ -173,15 +173,15 @@ const HomePage = () => {
       </section>
 
       <section className="character-section py-2">
-        <h2 className="mt-2 mb-4 text-4xl font-bold text-white text-center">
-          Artifact RVs: % of Max
+        <h2 className="mt-2 mb-4 text-4xl font-bold text-gray-200 text-center">
+          Artifact Roll Value (% of Max)
         </h2>
         <div className="overflow-x-auto mx-auto">
           <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-lg">
             {rollValues && (
               <table className="table-auto w-full">
                 <thead className="bg-gray-600">
-                  <tr className="text-white uppercase">
+                  <tr className="text-gray-100 uppercase">
                     <th className="py-3 px-6 text-center font-semibold border-r border-gray-100">
                       Character
                     </th>
@@ -201,7 +201,7 @@ const HomePage = () => {
                       Circlet
                     </th>
                     <th className="py-3 px-6 text-center border-l-2 border-blue-950">
-                      Combined
+                      Average
                     </th>
                   </tr>
                 </thead>
@@ -210,7 +210,7 @@ const HomePage = () => {
                   {rollValues.length > 0 &&
                     rollValues.map((character, index) => (
                       <tr key={index} className=" bg-white ">
-                        <td className="py-3 px-6 text-right text-black font-semibold whitespace-nowrap bg-gray-300 border-r border-t border-gray-100">
+                        <td className="py-3 px-6 text-right text-black font-semibold whitespace-nowrap bg-gray-400 border-r border-t border-gray-100">
                           {character.name}
                         </td>
                         {character.rollValues.map((rv, artifactSlot) => {
@@ -256,7 +256,9 @@ const HomePage = () => {
           onClick={toggleExpand}
           className="flex justify-center items-center cursor-pointer"
         >
-          <p className="font-semibold text-white text-center">How it works:</p>
+          <p className="font-semibold text-gray-100 text-center">
+            How it works:
+          </p>
           <span
             className={`ml-2 transform transition-transform ${
               isExpanded ? "rotate-180" : "rotate-0"
@@ -267,51 +269,49 @@ const HomePage = () => {
           </span>
         </div>
         {isExpanded && (
-          <ul className="list-disc p-6 space-y-2 text-white">
+          <ul className="list-disc p-6 space-y-2 text-gray-100">
             <li>
-              This app calculates an artifact roll value as a percentage of that
-              artifact vs one with perfect substats and max rolls, but the same
-              mainstat.
+              This app calculates the % of how close your artifacts are compared
+              to ones with perfect substats, max rolls and the same mainstat.
+              The final Roll Value and Average Gear Score is given as a
+              percentage of this max. Hover over the final value to see a
+              breakdown of the calculation.
             </li>
             <li>
               The roll values are weighted by the importance of each substat.
               The substat weights equal the % total DMG increase a max roll
-              provides. Each character has an editable row of weights in the
-              table below.
+              provides.
             </li>
             <li>
-              Hover over the final value to see a breakdown of the calculation.
-            </li>
-            <li>
-              Finally, characters and their weights entries are ranked by
-              average gear score.
-            </li>
-            <li>
-              Character data, as well as the roll values and edited weights, are
-              stored on your browser.
+              Weights for each character can be edited below to match your setup
+              and rotation. If using a calculator like
+              https://genshin.aspirine.su/ , you can multiply the Substat
+              Bonuses values by 0.85 to find the max roll improvement. Your
+              edited weights table will be saved in your browser.
             </li>
           </ul>
         )}
       </div>
-      <h2 className="mt-8 mb-4 text-4xl font-bold text-white text-center">
+      <h2 className="mt-8 mb-4 text-4xl font-bold text-gray-200 text-center">
         Editable Weights
       </h2>
-      <div className="overflow-x-auto mx-auto">
+      <div className="overflow-auto">
         {weights && (
-          <table className="w-full max-w-[900px] mx-auto rounded-lg overflow-hidden">
+          <table className="rounded-lg custom-table">
             <thead>
-              <tr className="bg-gray-600 text-white uppercase leading-normal ">
-                <th className="py-3 px-12 text-right">Character</th>
-                <th className="py-3 px-5 text-left">HP</th>
-                <th className="py-3 px-5 text-left">ATK</th>
-                <th className="py-3 px-5 text-left">DEF</th>
-                <th className="py-3 px-5 text-left">HP%</th>
-                <th className="py-3 px-5 text-left">ATK%</th>
-                <th className="py-3 px-5 text-left">DEF%</th>
-                <th className="py-3 px-5 text-left">CR</th>
-                <th className="py-3 px-5 text-left">CDMG</th>
-                <th className="py-3 px-5 text-left">ER</th>
-                <th className="py-3 px-5 text-left">EM</th>
+              <tr className="bg-gray-600 text-gray-100 uppercase leading-normal">
+                <th className="py-3 text-center">Character</th>
+                <th className="text-center">HP</th>
+                <th className="text-center">DEF</th>
+                <th className="text-center">ATK</th>
+                <th className="text-center">HP%</th>
+                <th className="text-center">ATK%</th>
+                <th className="text-center">DEF%</th>
+                <th className="text-center">CR</th>
+                <th className="text-center">CDMG</th>
+                <th className="text-center">ER</th>
+                <th className="text-center">EM</th>
+                <th className="text-center">ER needed</th>
               </tr>
             </thead>
 
@@ -323,11 +323,11 @@ const HomePage = () => {
 
                   return (
                     <tr key={index}>
-                      <td className="py-3 px-6 text-right text-white font-semibold border-r border-gray-300 bg-gray-600 h-full">
+                      <td className="text-right text-gray-100 font-semibold bg-gray-600">
                         {characterData.name}
                       </td>
                       {characterData.weights.map((value, index) => (
-                        <td key={index} style={{ height: "100%", padding: 0 }}>
+                        <td key={index}>
                           <input
                             type="number"
                             value={value}
@@ -336,15 +336,24 @@ const HomePage = () => {
                             }
                             onWheel={(event) => event.currentTarget.blur()}
                             aria-label="Character damage % improvement for substat: "
-                            className="w-full text-white text-center m-0 h-full border-t"
-                            style={{
-                              backgroundColor: "#172554",
-                              outline: "none",
-                            }}
+                            className=" text-gray-100 text-center custom-input"
                             step="any"
                           />
                         </td>
                       ))}
+                      <td className="text-center text-gray-100">
+                        <input
+                          type="number"
+                          value={characterData.energyNeeded}
+                          onChange={(event) =>
+                            handleChange(avatarId, index, event, setWeights)
+                          }
+                          onWheel={(event) => event.currentTarget.blur()}
+                          aria-label="Character damage % improvement for substat: "
+                          className=" text-gray-100 text-center custom-input"
+                          step="any"
+                        />
+                      </td>
                     </tr>
                   );
                 })}
@@ -362,7 +371,7 @@ const HomePage = () => {
               console.error("userData is undefined");
             }
           }}
-          className="px-4 py-2 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
+          className="px-4 py-2 m-2 bg-blue-500 text-gray-100 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-200 text-lg font-semibold"
         >
           Recalculate RVs
         </button>
@@ -373,7 +382,7 @@ const HomePage = () => {
           onClick={() => {
             handleResetWeights();
           }}
-          className="px-4 py-2 mr-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-200 text-lg font-semibold"
+          className="px-4 py-2 mr-4 bg-red-500 text-gray-100 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-200 text-lg font-semibold"
         >
           Reset weights
         </button>
@@ -382,7 +391,7 @@ const HomePage = () => {
           onClick={clearLocalStorage}
           className={`ml-4 px-4 py-2 ${
             buttonDisabled ? "bg-gray-400" : "bg-red-500"
-          } text-white rounded-lg ${
+          } text-gray-100 rounded-lg ${
             buttonDisabled ? "" : "hover:bg-red-600"
           } focus:ring-2 focus:ring-red-200 text-lg font-semibold`}
           disabled={buttonDisabled}
