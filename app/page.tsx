@@ -119,6 +119,16 @@ const HomePage = () => {
   return (
     <div className="container mx-auto p-4">
       <section className="hero flex items-center justify-center text-center bg-transparent py-4">
+        <div className="github-corner">
+          <a
+            href="https://github.com/YusufKhan/genshin_artifact_appraiser2"
+            target="GAA"
+            aria-label="View source on GitHub"
+          >
+            <div className="github-icon"></div>
+          </a>
+        </div>
+
         <div className="hero-content">
           <h1 className="text-4xl font-bold text-white drop-shadow-lg">
             Genshin Impact Artifact Analyzer
@@ -291,17 +301,17 @@ const HomePage = () => {
           <table className="w-full max-w-[900px] mx-auto rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-gray-600 text-white uppercase leading-normal ">
-                <th className="py-3 px-6 text-left">Character</th>
-                <th className="py-3 px-6 text-left">HP</th>
-                <th className="py-3 px-6 text-left">ATK</th>
-                <th className="py-3 px-6 text-left">DEF</th>
-                <th className="py-3 px-6 text-left">HP%</th>
-                <th className="py-3 px-6 text-left">ATK%</th>
-                <th className="py-3 px-6 text-left">DEF%</th>
-                <th className="py-3 px-6 text-left">CR</th>
-                <th className="py-3 px-6 text-left">CDMG</th>
-                <th className="py-3 px-6 text-left">ER</th>
-                <th className="py-3 px-6 text-left">EM</th>
+                <th className="py-3 px-12 text-right">Character</th>
+                <th className="py-3 px-5 text-left">HP</th>
+                <th className="py-3 px-5 text-left">ATK</th>
+                <th className="py-3 px-5 text-left">DEF</th>
+                <th className="py-3 px-5 text-left">HP%</th>
+                <th className="py-3 px-5 text-left">ATK%</th>
+                <th className="py-3 px-5 text-left">DEF%</th>
+                <th className="py-3 px-5 text-left">CR</th>
+                <th className="py-3 px-5 text-left">CDMG</th>
+                <th className="py-3 px-5 text-left">ER</th>
+                <th className="py-3 px-5 text-left">EM</th>
               </tr>
             </thead>
 
@@ -313,7 +323,7 @@ const HomePage = () => {
 
                   return (
                     <tr key={index}>
-                      <td className="py-3 px-6 text-center text-white font-semibold border-r border-gray-300 bg-gray-600 h-full">
+                      <td className="py-3 px-6 text-right text-white font-semibold border-r border-gray-300 bg-gray-600 h-full">
                         {characterData.name}
                       </td>
                       {characterData.weights.map((value, index) => (

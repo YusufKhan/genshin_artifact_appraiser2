@@ -23,6 +23,23 @@ body {
   background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
+.github-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+}
+
+.github-icon {
+  width: 100%;
+  height: 100%;
+  background-image: url("/github-color-svgrepo-com.png"); /* Adjust the path as needed */
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+}
+
 .text-shadow-lg {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adjust shadow properties as needed */
 }
