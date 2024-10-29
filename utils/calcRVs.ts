@@ -1,7 +1,7 @@
 import { WeightsData, UserData, CharacterRollValues } from "./interfaces";
 
 export function calculateRVs(data: UserData, weights: WeightsData) {
-  const substatMaxValues = {
+  const substatMaxValues: { [key: string]: number } = {
     FIGHT_PROP_HP: 298.75,
     FIGHT_PROP_ATTACK: 19.45,
     FIGHT_PROP_DEFENSE: 23.15,
@@ -13,26 +13,44 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
     FIGHT_PROP_CHARGE_EFFICIENCY: 6.48,
     FIGHT_PROP_ELEMENT_MASTERY: 23.31,
   };
-  type SubstatKeys = keyof typeof substatMaxValues;
+
+  const statNames: string[] = [
+    "HP", // FIGHT_PROP_HP
+    "ATK", // FIGHT_PROP_ATTACK
+    "DEF", // FIGHT_PROP_DEFENSE
+    "HP%", // FIGHT_PROP_HP_PERCENT
+    "ATK%", // FIGHT_PROP_ATTACK_PERCENT
+    "DEF%", // FIGHT_PROP_DEFENSE_PERCENT
+    "CR", // FIGHT_PROP_CRITICAL
+    "CDMG", // FIGHT_PROP_CRITICAL_HURT
+    "ER", // FIGHT_PROP_CHARGE_EFFICIENCY
+    "EM", // FIGHT_PROP_ELEMENT_MASTERY
+  ];
 
   const allCharacterRVs: CharacterRollValues[] = [];
 
-  //Iterate through each character
+  // -----
+  // CHARACTER LOOP
+  // -----
   for (let j = 0; j < data.avatarInfoList.length; j++) {
     const target = data.avatarInfoList[j];
     const artifacts = target.equipList;
     const charId = target.avatarId;
 
+    // Add default weights TO WEIGHTS TABLE if unknown character
+    // Can be edited by user
     if (!weights[charId]) {
-      // Add default weights if not present
       weights[charId] = {
         weights: [0, 0.0, 0, 0.0, 0.0, 0, 2.3, 2.3, 0.0, 0.0],
         name: "Unknown char: Def weights \n" + charId,
       };
     }
-    const charWeights = weights[charId];
-    const charName = weights[target.avatarId]?.name || target.avatarId; // Get name from weights file
 
+    // Get data from weights table
+    const charWeights = weights[charId];
+    const charName = weights[target.avatarId]?.name || target.avatarId;
+
+    // Ensure character artifacts are in the right order
     const artifactOrder = [
       "EQUIP_BRACER",
       "EQUIP_NECKLACE",
@@ -47,59 +65,122 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
     );
 
     const thisCharactersRVs = [];
-    let characterTotal = 0;
+    const thisCalcBreakdown: string[] = []; // Shown on hover label
+    let characterTotal = 0; // Average gear score
 
+    // -----
+    // ARTIFACT LOOP
+    // -----
     for (let i = 0; i < artifacts.length; i++) {
       const artifact = orderedArtifacts[i];
+      const thisSubstatCalcBreakdown: string[] = [];
 
-      // Skip artifacts without reliquary
+      // Skip artifacts without Reliquary tag
       if (!artifact.reliquary) {
         continue;
       }
 
-      const rv = artifact.flat.reliquarySubstats
-        .map((stat) => {
-          const substatType = stat.appendPropId as SubstatKeys;
-
-          if (!(substatType in substatMaxValues)) {
-            console.error(`Invalid substat type: ${substatType}`);
-            return 0;
-          }
-
-          const multipliedStat = stat.statValue;
-          const substatIndex =
-            Object.keys(substatMaxValues).indexOf(substatType);
-          //const meanValue = substatMaxValues[substatType] * 0.85; // Was for when weights table was average roll
-          const multiplier = charWeights.weights[substatIndex] ?? 0;
-
-          return (multipliedStat / substatMaxValues[substatType]) * multiplier;
-        })
-        .reduce((a, b) => a + b, 0);
-
-      const removedSlot = [...charWeights.weights];
-      const slotType = artifact.flat.reliquaryMainstat
-        .mainPropId as SubstatKeys;
-
-      if (Object.keys(substatMaxValues).indexOf(slotType) !== -1) {
-        removedSlot.splice(Object.keys(substatMaxValues).indexOf(slotType), 1);
+      if (artifact.flat.reliquarySubstats.length < 4) {
+        console.log("Missing substat on ${target}'s artifact slot:${i}");
+        continue;
       }
 
-      removedSlot.sort((a, b) => b - a);
+      // -----
+      // SUBSTAT LOOP
+      // -----
+      const rv = artifact.flat.reliquarySubstats
+        .map((stat) => {
+          // Gets substat index to find character specific substat weight
+          const substatType = stat.appendPropId as string;
+          const substatIndex =
+            Object.keys(substatMaxValues).indexOf(substatType);
+          const substatWeight = charWeights.weights[substatIndex] ?? 0;
+
+          // Substat eqv no. of max rolls
+          const subMaxRollEqv = stat.statValue / substatMaxValues[substatType];
+
+          // String explaining RV calc eg 3.2x (CDMG: 2.3)
+          if (substatWeight > 0) {
+            // Only adding if weight > 0
+            thisSubstatCalcBreakdown.push(
+              `${subMaxRollEqv.toFixed(1)}x (${
+                statNames[substatIndex]
+              }: ${substatWeight})`
+            );
+          }
+          return subMaxRollEqv * substatWeight;
+        })
+        .reduce((a, b) => a + b, 0);
+      // -----
+      // SUBSTAT LOOP END
+      // -----
+
+      // Find the index of the main stat
+      const mainStat = artifact.flat.reliquaryMainstat.mainPropId as string;
+      const index = Object.keys(substatMaxValues).indexOf(mainStat);
+
+      // Get indices of 4 highest substat multipliers that aren't the main stat
+      const highestIndices: number[] = [];
+      for (let i = 0; i < 4; i++) {
+        let maxIndex: number = -1;
+        let maxValue: number = Number.MIN_SAFE_INTEGER;
+        for (let j = 0; j < charWeights.weights.length; j++) {
+          if (
+            j !== index &&
+            !highestIndices.includes(j) &&
+            charWeights.weights[j] > maxValue
+          ) {
+            maxValue = charWeights.weights[j];
+            maxIndex = j;
+          }
+        }
+        if (maxIndex !== -1) {
+          highestIndices.push(maxIndex);
+        }
+      }
+
       const thisRVMax =
-        6 * removedSlot[0] + removedSlot[1] + removedSlot[2] + removedSlot[3];
+        6 * charWeights.weights[highestIndices[0]] +
+        charWeights.weights[highestIndices[1]] +
+        charWeights.weights[highestIndices[2]] +
+        charWeights.weights[highestIndices[3]];
       thisCharactersRVs.push(((rv / thisRVMax) * 100).toFixed(0));
       characterTotal += (rv / thisRVMax) * 100;
+      // Calc breakdown eg Max RV is 6x CR + 1x CDMG, ATK%, HP%
+      try {
+        let combinedString = thisSubstatCalcBreakdown[0];
+        for (let i = 1; i < thisSubstatCalcBreakdown.length; i++) {
+          combinedString += " + ";
+          combinedString += thisSubstatCalcBreakdown[i];
+        }
+        thisCalcBreakdown.push(
+          `This artifact: ${combinedString} = ${rv.toFixed(1)}` +
+            `\nMax rolls x weights: 6x ${statNames[highestIndices[0]]} + 1x ` +
+            `${statNames[highestIndices[1]]}, ${
+              statNames[highestIndices[2]]
+            }, ${statNames[highestIndices[3]]} = ` +
+            `${thisRVMax.toFixed(1)}`
+        );
+      } catch (error) {
+        console.error("Error accessing array elements:", error);
+        thisCalcBreakdown.push("No useful substat");
+      }
     }
+    // -----
+    // ARTIFACT LOOP END
+    // -----
 
     thisCharactersRVs.push((characterTotal / 5).toFixed(0));
-    //console.log(thisCharactersRVs);
     allCharacterRVs.push({
       rollValues: thisCharactersRVs,
       name: charName,
       id: charId,
+      calcBreakdown: thisCalcBreakdown,
     });
-    //console.log(characterTotal);
   }
+  // -----
+  // CHARACTER LOOP END
+  // -----
 
   // Sort character list based on total RV score
   allCharacterRVs.sort((a, b) => {
@@ -109,7 +190,5 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
     return numA - numB;
   });
 
-  //const updatedTeams = teams;
-
-  return { allCharacterRVs, weights };
+  return { allCharacterRVs, weights }; // Need to return weights since unknown character may have been added
 }
