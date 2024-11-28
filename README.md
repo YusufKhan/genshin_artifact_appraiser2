@@ -7,6 +7,8 @@ Other Technical Details
 
 Future Plans
 
+- Breakdown calc like
+    2.5 CR + 0.8 CDMG + 1.5 ATK% + 0.8 ATK -> 2.5*3 + 0.8*3 + 1.5*1.5
 - Add ER target and valuation
 - Add Enka data TTL check, or some cache lifespan
 - Improve background

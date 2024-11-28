@@ -49,7 +49,15 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
 
     // Get data from weights table
     const charWeights = weights[charId];
-    const charName = weights[target.avatarId]?.name || target.avatarId;
+    const charName = weights[charId]?.name || target.avatarId; // Set name to ID if unknown (new character)
+
+    // On ER target - Every ER roll reduces the ceiling for a slot that has an ER sub
+    // IGNORE   Under - On target discount + Each slot's lowest stat -
+    // Over - On target discount + x roll(s) of highest stat divided into slots with ER and added to ceiling
+    //const energyNeeded = weights.energyNeeded;
+    //let erSubsTotal = 0;
+
+    // ER needed must be positive, other weights too
 
     // Ensure character artifacts are in the right order
     const artifactOrder = [
@@ -75,8 +83,9 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
     for (let i = 0; i < artifacts.length; i++) {
       const artifact = orderedArtifacts[i];
       const thisSubstatCalcBreakdown: string[] = [];
+      let discountRollsER = 0; // No. of roles rounded up
 
-      // Skip artifacts without Reliquary tag
+      // Skip gear without Reliquary tag
       if (!artifact.reliquary) {
         continue;
       }
@@ -100,13 +109,18 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
           // Substat eqv no. of max rolls
           const subMaxRollEqv = stat.statValue / substatMaxValues[substatType];
 
-          // String explaining RV calc eg 3.2x (CDMG: 2.3)
+          if (substatType == "FIGHT_PROP_CHARGE_EFFICIENCY") {
+            //erSubsTotal += stat.statValue; // Add to ER running total
+            discountRollsER = Math.ceil(subMaxRollEqv); // Array of ER rolls to discount
+          }
+
+          // String explaining RV calc eg 3.2xCDMG
           if (substatWeight > 0) {
             // Only adding if weight > 0
             thisSubstatCalcBreakdown.push(
-              `${subMaxRollEqv.toFixed(1)}x (${
+              `${subMaxRollEqv.toFixed(1)}*${
                 statNames[substatIndex]
-              }: ${substatWeight})`
+              }(${substatWeight})`
             );
           }
           return subMaxRollEqv * substatWeight;
@@ -118,16 +132,17 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
 
       // Find the index of the main stat
       const mainStat = artifact.flat.reliquaryMainstat.mainPropId as string;
-      const index = Object.keys(substatMaxValues).indexOf(mainStat);
+      const mainStatIndex = Object.keys(substatMaxValues).indexOf(mainStat);
 
-      // Get indices of 4 highest substat multipliers that aren't the main stat
+      // Get indices of 4 highest substat multipliers that aren't the main stat or ER
       const highestIndices: number[] = [];
       for (let i = 0; i < 4; i++) {
         let maxIndex: number = -1;
         let maxValue: number = Number.MIN_SAFE_INTEGER;
         for (let j = 0; j < charWeights.weights.length; j++) {
           if (
-            j !== index &&
+            j !== mainStatIndex &&
+            j !== 8 && // Deals with ER RV separately
             !highestIndices.includes(j) &&
             charWeights.weights[j] > maxValue
           ) {
@@ -140,28 +155,42 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
         }
       }
 
-      const thisRVMax =
-        6 * charWeights.weights[highestIndices[0]] +
+      // If 6 ER rolls, then 1 of top weights indices 1,2 only
+      let thisRVMax =
+        (7 - discountRollsER) * charWeights.weights[highestIndices[0]] +
         charWeights.weights[highestIndices[1]] +
         charWeights.weights[highestIndices[2]] +
-        charWeights.weights[highestIndices[3]];
+        charWeights.weights[8] * discountRollsER; // Non-zero if ER contributes to DMG
+
+      let lastStatMultiplier = 0;
+      // If no ER, then can add 4th highest stat
+      if (discountRollsER == 0) {
+        thisRVMax += charWeights.weights[highestIndices[3]];
+        lastStatMultiplier = 1;
+      }
+
       thisCharactersRVs.push(((rv / thisRVMax) * 100).toFixed(0));
       characterTotal += (rv / thisRVMax) * 100;
-      // Calc breakdown eg Max RV is 6x CR + 1x CDMG, ATK%, HP%
+
+      // Calc breakdown eg Max RV is 6x CR + 1x CDMG + 1x ATK% + 1x HP%
       try {
         let combinedString = thisSubstatCalcBreakdown[0];
         for (let i = 1; i < thisSubstatCalcBreakdown.length; i++) {
           combinedString += " + ";
           combinedString += thisSubstatCalcBreakdown[i];
         }
-        thisCalcBreakdown.push(
-          `This artifact: ${combinedString} = ${rv.toFixed(1)}` +
-            `\nMax rolls x weights: 6x ${statNames[highestIndices[0]]} + 1x ` +
-            `${statNames[highestIndices[1]]}, ${
-              statNames[highestIndices[2]]
-            }, ${statNames[highestIndices[3]]} = ` +
-            `${thisRVMax.toFixed(1)}`
-        );
+
+        const hoverLabel =
+          `This Artifact: ${combinedString} = ${rv.toFixed(1)}\n` +
+          `${discountRollsER} subs discounted for ER \n` +
+          `Perfect RV: ${7 - discountRollsER}*${statNames[highestIndices[0]]}` +
+          ` + 1*${statNames[highestIndices[1]]}` +
+          ` + 1*${statNames[highestIndices[2]]}` +
+          ` + ${lastStatMultiplier}*${statNames[highestIndices[3]]}` +
+          ` + ${discountRollsER}*ER` +
+          ` = ${thisRVMax.toFixed(1)}`;
+
+        thisCalcBreakdown.push(hoverLabel);
       } catch (error) {
         console.error("Error accessing array elements:", error);
         thisCalcBreakdown.push("No useful substat");

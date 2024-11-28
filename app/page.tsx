@@ -296,7 +296,7 @@ const HomePage = () => {
         Editable Weights
       </h2>
       <div className="overflow-auto">
-        {weights && (
+        {rollValues.length > 0 && (
           <table className="rounded-lg custom-table">
             <thead>
               <tr className="bg-gray-600 text-gray-100 uppercase leading-normal">
