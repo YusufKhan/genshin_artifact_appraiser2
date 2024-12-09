@@ -8,7 +8,7 @@ Other Technical Details
 Future Plans
 
 - Breakdown calc like
-    2.5 CR + 0.8 CDMG + 1.5 ATK% + 0.8 ATK -> 2.5*3 + 0.8*3 + 1.5*1.5
+  2.5 CR + 0.8 CDMG + 1.5 ATK% + 0.8 ATK -> 2.5*3 + 0.8*3 + 1.5\*1.5
 - Add ER target and valuation
 - Add Enka data TTL check, or some cache lifespan
 - Improve background
@@ -19,5 +19,6 @@ Future Plans
   - Show team, rotation details / Enka build name
 - Group characters by artifact set and domain
 - Display table of off-set pieces
+- Use total Er needed and factor in character ascension+weapon+ER time
 
 Feel free to PM me on Discord ( mechatr0nix ) to submit improved default weights, or for any other discussion about this project.

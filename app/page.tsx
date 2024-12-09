@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { calculateRVs } from "@/utils/calcRVs";
 import { handleChange } from "@/utils/handleChange";
+import { handleChangeER } from "@/utils/handleChangeER";
 import { fetchEnkaData } from "@/utils/fetchEnkaData";
 import { WeightsData, UserData, CharacterRollValues } from "@/utils/interfaces";
 
@@ -346,7 +347,7 @@ const HomePage = () => {
                           type="number"
                           value={characterData.energyNeeded}
                           onChange={(event) =>
-                            handleChange(avatarId, index, event, setWeights)
+                            handleChangeER(avatarId, event, setWeights)
                           }
                           onWheel={(event) => event.currentTarget.blur()}
                           aria-label="Character damage % improvement for substat: "
