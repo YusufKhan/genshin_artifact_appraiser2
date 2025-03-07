@@ -3,201 +3,203 @@ import { StatReferences } from "./statReferences";
 
 export function calculateRVs(data: UserData, weights: WeightsData) {
   const allCharacterRVs: CharacterRollValues[] = [];
-  const maxStatRoll = StatReferences.maxStatRoll;
-  const statNames = StatReferences.statNames;
+  const maxStatRoll = StatReferences.maxStatRoll as {
+    [key: string]: { name: string; maxValue: number };
+  };
+  const statNames = StatReferences.statNames as string[];
+  const artifactOrder = StatReferences.artifactOrder as string[];
 
   // CHARACTER LOOP
   for (let j = 0; j < data.avatarInfoList.length; j++) {
+    // Get character ID
     const target = data.avatarInfoList[j];
-    const artifacts = target.equipList;
     const charId = target.avatarId;
 
-    // Add default weights TO WEIGHTS TABLE if unknown character
-    // Can be edited by user
+    // If unknown character, add default weights line
+    // Resulting weights table can be edited by user, and is saved to that charID
     if (!weights[charId]) {
       weights[charId] = {
         weights: [0, 0.0, 0, 0.0, 0.0, 0, 2.3, 2.3, 0.0, 0.0],
-        name: "Unknown char: Def weights \n" + charId,
+        name: "Unknown:" + charId,
         energyNeeded: 20,
       };
     }
 
-    // Get data from weights table
-    const charWeights = weights[charId];
-    const charName = weights[charId]?.name || target.avatarId; // Set name to ID if unknown (new character)
+    // Get other character details
+    const charWeightsAndER = weights[charId];
+    const charName = weights[charId]?.name;
 
-    // ER needed must be positive, other weights too
+    // Filter list to only artifacts (weapon removed)
+    let artifacts = target.equipList.filter((artifact) => artifact.reliquary);
 
-    const artifactOrder = [
-      "EQUIP_BRACER",
-      "EQUIP_NECKLACE",
-      "EQUIP_SHOES",
-      "EQUIP_RING",
-      "EQUIP_DRESS",
-    ];
-    // Ensure character artifacts are in the right order
-    const orderedArtifacts = artifacts.sort(
+    // Doesn't put artifact in right slot if some missing, so skip character
+    if (artifacts.length < 5) {
+      continue;
+    }
+
+    // Sort artifacts to usual slot order for final display
+    artifacts = artifacts.sort(
       (a, b) =>
         artifactOrder.indexOf(a.flat.equipType) -
         artifactOrder.indexOf(b.flat.equipType)
     );
 
-    // On ER target - Every ER roll reduces the ceiling for a slot that has an ER sub
-    // Extra ER rolls: Each slot with an ER roll, gets ceiling raised by extra rolls/slots * Ave of weights 1,2
-    const rollsNeeded = Math.ceil(charWeights.energyNeeded / 6.48); // Divided by max ER per substat
+    // Every ER roll reduces the ceiling for a slot that has an ER sub
+    // All ER rolls discounted, extras will be added back as penalty
     let erSubsTotal = 0;
     let slotsWithErCount = 0;
-    let erPenalty = 0;
     const slotHasErArray: boolean[] = [];
-
-    // ARTIFACT LOOP 1 FOR ER COUNT
     for (let i = 0; i < artifacts.length; i++) {
-      const artifact = orderedArtifacts[i];
-      // Skip gear without Reliquary tag
-      if (!artifact.reliquary) {
-        continue;
-      }
+      const artifact = artifacts[i]; // This artifact
+
+      // Skip if substats missing
       if (artifact.flat.reliquarySubstats.length < 4) {
-        continue;
+        continue; // Skip if substats missing
       }
-      let hasER = false;
+
+      // Check for ER substats and and add to counts / slot arrays
       artifact.flat.reliquarySubstats.forEach((stat) => {
         const substatType = stat.appendPropId as string;
         if (substatType == "FIGHT_PROP_CHARGE_EFFICIENCY") {
-          erSubsTotal += stat.statValue;
-          hasER = true;
           slotHasErArray.push(true);
           slotsWithErCount++;
+          erSubsTotal += stat.statValue;
+        } else {
+          slotHasErArray.push(false);
         }
       });
-      if (hasER == false) {
-        slotHasErArray.push(false);
-      }
     }
 
-    const erSubsEqvCount = // For when total ER can be reached with fewer rolls
-      Math.ceil(
-        Math.round(
-          (erSubsTotal / maxStatRoll["FIGHT_PROP_CHARGE_EFFICIENCY"].maxValue) *
-            10
-        ) / 10
-      );
-    if (erSubsEqvCount > rollsNeeded) {
-      erPenalty = (erSubsEqvCount - rollsNeeded) / slotsWithErCount;
-      // Eg 2 extra rolls, 4 slots -> 0.5 * max stat ceiling boost
-    }
+    // How many perfect ER subs needed
+    const rollsNeeded = Math.ceil(
+      Math.round((charWeightsAndER.energyNeeded / 6.48) * 10) / 10
+    );
+
+    // For when total ER can be reached with fewer rolls
+    const erSubsEqvCount = Math.ceil(
+      Math.round(
+        (erSubsTotal / maxStatRoll["FIGHT_PROP_CHARGE_EFFICIENCY"].maxValue) *
+          10
+      ) / 10
+    );
+
+    // If too much ER, penalty distributed among slots with ER subs
+    const erPenalty =
+      erSubsEqvCount > rollsNeeded
+        ? (erSubsEqvCount - rollsNeeded) / slotsWithErCount
+        : 0;
 
     const thisCharactersRVs = [];
     const thisCalcBreakdown: string[] = []; // Shown on hover label
-    let characterTotal = 0; // Average gear score
+    let characterTotal = 0; // For calculating average RV
 
-    // ARTIFACT LOOP 2 MAIN
+    // MAIN ARTIFACT RV CALC LOOP
+    // Substat values will be rounded to 0.1 since Enka data is rounded
     for (let i = 0; i < artifacts.length; i++) {
-      const artifact = orderedArtifacts[i];
+      const thisArtifact = artifacts[i];
+      /** String explaining RV calc eg 3.2*CDMG */
       const breakdownSlotCalcArray: string[] = [];
-      let discountRollsER = 0; // No. of rolls rounded up
+      let discountRollsER = 0; // All ER rolls discounted, if character needs ER
 
-      // Skip gear without Reliquary tag
-      if (!artifact.reliquary) {
-        continue;
-      }
-      if (artifact.flat.reliquarySubstats.length < 4) {
-        console.log("Missing substat on ${target}'s artifact slot:${i}");
+      if (thisArtifact.flat.reliquarySubstats.length < 4) {
         continue;
       }
 
-      // SUBSTAT LOOP
-      const rv = artifact.flat.reliquarySubstats
+      // Loops through this artifacts substats
+      const artifactRV = thisArtifact.flat.reliquarySubstats
         .map((stat) => {
-          // Gets substat index to find character specific substat weight
           const substatType = stat.appendPropId as string;
-          const substatIndex = Object.keys(maxStatRoll).indexOf(substatType);
-          const substatWeight = charWeights.weights[substatIndex] ?? 0;
 
-          // Substat eqv no. of max rolls
-          // TODO: Test for rounding errors with high # of rolls
+          // Fixed order for substat types. Always referencing statReferences index
+          const substatIndex = Object.keys(maxStatRoll).indexOf(substatType);
+          const substatWeight = charWeightsAndER.weights[substatIndex] ?? 0;
+
+          // Substat equivalent no. of max rolls
           const subMaxRollEqv =
             Math.round(
               (stat.statValue / maxStatRoll[substatType].maxValue) * 10
             ) / 10;
 
+          // ER is dealt with separately
           if (
             substatType == "FIGHT_PROP_CHARGE_EFFICIENCY" &&
-            charWeights.energyNeeded > 0
+            charWeightsAndER.energyNeeded > 0
           ) {
-            //erSubsTotal += stat.statValue; // Add to ER running total
             discountRollsER = Math.ceil(subMaxRollEqv); // Array of ER rolls to discount
-            // If ER needed, all ER rolls discounted, then penalty added back for overcap later
+            // If ER needed, all ER rolls discounted, penalty added back later if ER overcapped
           }
 
-          // String explaining RV calc eg 3.2xCDMG
           if (substatWeight > 0) {
-            // Only adding if weight > 0
             breakdownSlotCalcArray.push(
               `${subMaxRollEqv.toFixed(1)}*${
-                maxStatRoll[stat.appendPropId].name
+                statNames[substatIndex]
               }(${substatWeight})`
             );
           }
-          return subMaxRollEqv * substatWeight;
+          return subMaxRollEqv * substatWeight; // Returns this artifact's RV
         })
-        .reduce((a, b) => a + b, 0);
-      // SUBSTAT LOOP END
+        .reduce((a, b) => a + b, 0); // Sums RV for all of this artifact's substats
 
-      // Find the index of the main stat
-      const mainStat = artifact.flat.reliquaryMainstat.mainPropId as string;
+      // Next the RV max array needs to be built
+      const mainStat = thisArtifact.flat.reliquaryMainstat.mainPropId as string;
       const mainStatIndex = Object.keys(maxStatRoll).indexOf(mainStat);
 
-      // Get indices of 4 highest substat multipliers that aren't the main stat or ER
-      const highestIndices: number[] = [];
-      const highestWeights: string[] = [];
-      for (let i = 0; i < 4; i++) {
-        let maxIndex: number = -1;
-        let maxValue: number = Number.MIN_SAFE_INTEGER;
-        for (let j = 0; j < charWeights.weights.length; j++) {
-          if (
-            j !== mainStatIndex &&
-            j !== 8 && // Deals with ER RV separately
-            !highestIndices.includes(j) &&
-            charWeights.weights[j] > maxValue
-          ) {
-            maxValue = charWeights.weights[j];
-            maxIndex = j;
-          }
-        }
-        if (maxIndex !== -1) {
-          highestIndices.push(maxIndex);
-          highestWeights.push();
-        }
-      }
+      const erWeight = charWeightsAndER.weights[8];
+      /** Main stat removed */
+      let filteredWeights = charWeightsAndER.weights.filter(
+        (_, index) => index !== mainStatIndex
+      );
+      // Copy and sort weights, keeping track of indices
+      const sortedWeightsWithIndices = filteredWeights
+        .map((weight, index) => ({ weight, index })) // Create array of objects with weight and index
+        .sort((a, b) => b.weight - a.weight); // Sort by weight in descending order
+      // Extract sorted weights
+      const sortedWeights = sortedWeightsWithIndices.map(
+        (entry) => entry.weight
+      );
+      // Use indices to create sorted list of weight names
+      const sortedWeightStatNames = sortedWeightsWithIndices.map((entry) => {
+        return statNames[entry.index];
+      });
 
-      // If 6 ER rolls, then 1 of top weights indices 1,2 only
-      let thisRVMax =
-        (7 - discountRollsER) * charWeights.weights[highestIndices[0]] +
-        charWeights.weights[highestIndices[1]] +
-        charWeights.weights[highestIndices[2]] +
-        charWeights.weights[8] * discountRollsER; // Non-zero if ER contributes to DMG
+      // Need array of indices of best weights, so specific ones can be removed
+      let indices = charWeightsAndER.weights.map((_, index) => index);
+      indices.sort(
+        // Sort indices based on the values in `weights`
+        (a, b) => charWeightsAndER.weights[b] - charWeightsAndER.weights[a]
+      );
 
-      let rvSlotPenalty = 0;
+      // Remove main stat, ER index
+      const unwantedIndices = [mainStatIndex, 8];
+      indices = indices.filter((index) => !unwantedIndices.includes(index));
+
+      let thisRVMax = // Calculates RV Max
+        (7 - discountRollsER) * charWeightsAndER.weights[indices[0]] +
+        charWeightsAndER.weights[indices[1]] +
+        charWeightsAndER.weights[indices[2]] +
+        charWeightsAndER.weights[8] * discountRollsER; // Non-zero if ER contributes to DMG
+
+      //let rvSlotPenalty = 0;
       if (slotHasErArray[i]) {
         // If slot has ER, apply penalty if penalty not zero
         thisRVMax +=
           (erPenalty *
-            (charWeights.weights[highestIndices[0]] *
-              charWeights.weights[highestIndices[1]])) / // Penalty RV is average of top 2 subs
+            (charWeightsAndER.weights[indices[0]] *
+              charWeightsAndER.weights[indices[1]])) / // Penalty RV is average of top 2 subs
           2;
-        rvSlotPenalty = erPenalty; // Not zero if slot has ER
+        //rvSlotPenalty = erPenalty; // Not zero if slot has ER
       }
 
+      // If penalty, need to minus max RV gained by ER roll(whether its zero or not)
       let lastStatMultiplier = 0;
       // If no ER, then can add 4th highest stat
       if (discountRollsER == 0) {
-        thisRVMax += charWeights.weights[highestIndices[3]];
+        thisRVMax += charWeightsAndER.weights[indices[3]];
         lastStatMultiplier = 1;
       }
 
-      thisCharactersRVs.push(((rv / thisRVMax) * 100).toFixed(0));
-      characterTotal += (rv / thisRVMax) * 100;
+      thisCharactersRVs.push(((artifactRV / thisRVMax) * 100).toFixed(0));
+      characterTotal += (artifactRV / thisRVMax) * 100;
 
       // Calc breakdown for this artifact eg 2.2*CR + 0.8*CDMG + 0.7*ATK%
       try {
@@ -207,7 +209,7 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
           combinedString += " + ";
           combinedString += breakdownSlotCalcArray[i];
         }
-        let hoverLabel = `This Artifact: ${combinedString} = ${rv.toFixed(
+        let hoverLabel = `This Artifact: ${combinedString} = ${artifactRV.toFixed(
           1
         )}\n`;
 
@@ -216,11 +218,11 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
           hoverLabel += `Lowering ceiling for ${discountRollsER} ER substats\n`;
 
           // If this build has extra ER rolls -> adding back discounted rolls
-          if (rvSlotPenalty > 0) {
-            hoverLabel += `Distributed penalty for excess ER: ${rvSlotPenalty.toFixed(
-              1
-            )}*Best weight(${
-              charWeights.weights[highestIndices[0]]
+          if (erPenalty > 0 && slotHasErArray[i]) {
+            hoverLabel += `Distributed penalty for excess ER: ${(
+              erPenalty / slotsWithErCount
+            ).toFixed(1)}*Best weight(${
+              charWeightsAndER.weights[indices[0]]
             })\nAssuming ${
               erSubsEqvCount - rollsNeeded // Extra ER rolls across build
             } ER roll(s) can be replaced with best stat\n`;
@@ -230,27 +232,24 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
           // Will have at least 1 discount roll in this condition body
           else {
             hoverLabel += `RV Ceiling: ${7 - discountRollsER}*${
-              statNames[highestIndices[0]]
+              statNames[indices[0]]
             }`;
             // Now ER may need to replace the 4th substat in the Perfect RV for slot calc, if it isn't there already
           }
         }
         // If 0 ER, "6x best stat" ceiling
         else {
-          hoverLabel += `RV Ceiling: 6*${statNames[highestIndices[0]]}(${
-            charWeights.weights[highestIndices[0]]
+          hoverLabel += `RV Ceiling: 6*${statNames[indices[0]]}(${
+            charWeightsAndER.weights[indices[0]]
           })`;
         }
 
         hoverLabel +=
-          ` + 1*${statNames[highestIndices[1]]}` +
-          ` + 1*${statNames[highestIndices[2]]}`;
+          ` + 1*${statNames[indices[1]]}` + ` + 1*${statNames[indices[2]]}`;
         if (lastStatMultiplier > 0) {
-          hoverLabel += ` + ${lastStatMultiplier}*${
-            statNames[highestIndices[3]]
-          }`;
+          hoverLabel += ` + ${lastStatMultiplier}*${statNames[indices[3]]}`;
         }
-        if (charWeights.weights[8] > 0 && discountRollsER > 0) {
+        if (charWeightsAndER.weights[8] > 0 && discountRollsER > 0) {
           // Adding ER and multiplier if ER was discounted from ceiling
           hoverLabel += ` + ${discountRollsER}*ER`;
         }

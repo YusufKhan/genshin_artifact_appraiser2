@@ -14,6 +14,14 @@ export class StatReferences {
     FIGHT_PROP_ELEMENT_MASTERY: { name: "EM", maxValue: 23.31 }, // 23.31
   };
 
+  public static artifactOrder: string[] = [
+    "EQUIP_BRACER",
+    "EQUIP_NECKLACE",
+    "EQUIP_SHOES",
+    "EQUIP_RING",
+    "EQUIP_DRESS",
+  ];
+
   public static statNames: string[] = [
     "HP",
     "ATK",
