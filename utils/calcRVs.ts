@@ -144,9 +144,9 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
       const mainStat = thisArtifact.flat.reliquaryMainstat.mainPropId as string;
       const mainStatIndex = Object.keys(maxStatRoll).indexOf(mainStat);
 
-      const erWeight = charWeightsAndER.weights[8];
+      //const erWeight = charWeightsAndER.weights[8];
       /** Main stat removed */
-      let filteredWeights = charWeightsAndER.weights.filter(
+      /*const filteredWeights = charWeightsAndER.weights.filter(
         (_, index) => index !== mainStatIndex
       );
       // Copy and sort weights, keeping track of indices
@@ -160,7 +160,7 @@ export function calculateRVs(data: UserData, weights: WeightsData) {
       // Use indices to create sorted list of weight names
       const sortedWeightStatNames = sortedWeightsWithIndices.map((entry) => {
         return statNames[entry.index];
-      });
+      });*/
 
       // Need array of indices of best weights, so specific ones can be removed
       let indices = charWeightsAndER.weights.map((_, index) => index);

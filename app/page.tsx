@@ -303,8 +303,8 @@ const HomePage = () => {
               <tr className="bg-gray-600 text-gray-100 uppercase leading-normal">
                 <th className="py-3 text-center">Character</th>
                 <th className="text-center">HP</th>
-                <th className="text-center">DEF</th>
                 <th className="text-center">ATK</th>
+                <th className="text-center">DEF</th>
                 <th className="text-center">HP%</th>
                 <th className="text-center">ATK%</th>
                 <th className="text-center">DEF%</th>
