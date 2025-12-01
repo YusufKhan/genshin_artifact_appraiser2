@@ -1,513 +1,107 @@
 {
-  "10000002": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0],
-    "name": "Ayaka",
-    "energyNeeded": 20
-  },
-  "10000003": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Jean",
-    "energyNeeded": 20
-  },
-  "10000005": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler",
-    "energyNeeded": 20
-  },
-  "10000005-501": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 1",
-    "energyNeeded": 20
-  },
-  "10000005-503": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 3",
-    "energyNeeded": 20
-  },
-  "10000005-504": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 4",
-    "energyNeeded": 20
-  },
-  "10000005-506": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 6",
-    "energyNeeded": 20
-  },
-  "10000005-507": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 7",
-    "energyNeeded": 20
-  },
-  "10000005-508": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 8",
-    "energyNeeded": 20
-  },
-  "10000006": {
-    "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 1.2],
-    "name": "Lisa",
-    "energyNeeded": 20
-  },
-  "10000007": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler",
-    "energyNeeded": 20
-  },
-    "10000007-701": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 1",
-    "energyNeeded": 20
-  },
-  "10000007-703": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 3",
-    "energyNeeded": 20
-  },
-  "10000007-704": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 4",
-    "energyNeeded": 20
-  },
-  "10000007-706": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 6",
-    "energyNeeded": 20
-  },
-  "10000007-707": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 7",
-    "energyNeeded": 20
-  },
-  "10000007-708": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Traveler 8"
-  },
-  "10000014": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Barbara",
-    "energyNeeded": 20
-  },
-  "10000015": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Kaeya",
-    "energyNeeded": 20
-  },
-  "10000016": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Diluc",
-    "energyNeeded": 20
-  },
-  "10000020": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Razor",
-    "energyNeeded": 20
-  },
-  "10000021": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Amber",
-    "energyNeeded": 20
-  },
-  "10000022": {
-    "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 1.2],
-    "name": "Venti",
-    "energyNeeded": 20
-  },
-  "10000023": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Xiangling",
-    "energyNeeded": 20
-  },
-  "10000024": {
-    "weights": [0, 0.3, 0, 0, 0.5, 1.0, 2.0, 2.0, 0, 0.3],
-    "name": "Beidou",
-    "energyNeeded": 20
-  },
-  "10000025": {
-    "weights": [0.5, 0.3, 0, 1.2, 0.8, 0, 2.3, 2.3, 0, 0],
-    "name": "Xingqiu",
-    "energyNeeded": 20
-  },
-  "10000026": {
-    "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 0],
-    "name": "Xiao",
-    "energyNeeded": 20
-  },
-  "10000027": {
-    "weights": [0, 0.3, 0, 0, 0.5, 0, 2.0, 2.0, 0, 0],
-    "name": "Ningguang",
-    "energyNeeded": 20
-  },
-  "10000029": {
-    "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5],
-    "name": "Klee",
-    "energyNeeded": 20
-  },
-  "10000030": {
-    "weights": [0, 0.3, 0, 0, 0.5, 1.0, 2.0, 2.0, 0, 0],
-    "name": "Zhongli",
-    "energyNeeded": 20
-  },
-  "10000031": {
-    "weights": [0, 0.63, 0, 0, 1.41, 0, 2.62, 2.88, 0, 1.43],
-    "name": "Fischl",
-    "energyNeeded": 20
-  },
-  "10000032": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Bennett",
-    "energyNeeded": 20
-  },
-  "10000033": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8],
-    "name": "Tartaglia",
-    "energyNeeded": 20
-  },
-  "10000034": {
-    "weights": [0, 0.2, 0.6, 0.0, 0.8, 1.2, 2.3, 2.3, 0.0, 0.0],
-    "name": "Noelle",
-    "energyNeeded": 20
-  },
-  "10000035": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Qiqi",
-    "energyNeeded": 20
-  },
-  "10000036": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Chongyun",
-    "energyNeeded": 20
-  },
-  "10000037": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Ganyu",
-    "energyNeeded": 20
-  },
-  "10000038": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Albedo",
-    "energyNeeded": 20
-  },
-  "10000039": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Diona",
-    "energyNeeded": 20
-  },
-  "10000041": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Mona",
-    "energyNeeded": 20
-  },
-  "10000042": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.7],
-    "name": "Keqing",
-    "energyNeeded": 20
-  },
-  "10000043": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.5],
-    "name": "Sucrose",
-    "energyNeeded": 20
-  },
-  "10000044": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Xinyan",
-    "energyNeeded": 20
-  },
-  "10000045": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Rosaria",
-    "energyNeeded": 20
-  },
-  "10000046": {
-    "weights": [0.62, 0.5, 0, 1.88, 1.07, 0, 3.2, 2.16, 0, 2.36],
-    "name": "Hu Tao",
-    "energyNeeded": 20
-  },
-  "10000047": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.5],
-    "name": "Kazuha",
-    "energyNeeded": 20
-  },
-  "10000048": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8],
-    "name": "Yanfei",
-    "energyNeeded": 20
-  },
-  "10000049": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8],
-    "name": "Yoimiya",
-    "energyNeeded": 20
-  },
-  "10000050": {
-    "weights": [0, 0.2, 0, 0, 0.8, 0, 0.6, 0.6, 0.0, 2.0],
-    "name": "Thoma",
-    "energyNeeded": 20
-  },
-  "10000051": {
-    "weights": [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0],
-    "name": "Eula",
-    "energyNeeded": 20
-  },
-  "10000052": {
-    "weights": [0, 0.53, 0, 0, 1.34, 0, 2.92, 2.43, 1.1, 0],
-    "name": "Raiden",
-    "energyNeeded": 20
-  },
-  "10000053": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Sayu",
-    "energyNeeded": 20
-  },
-  "10000054": {
-    "weights": [0.3, 0.2, 0, 1.6, 0.8, 0, 0, 0, 0.0, 0.0],
-    "name": "Kokomi",
-    "energyNeeded": 20
-  },
-  "10000055": {
-    "weights": [0, 0.2, 0.4, 0.0, 0.6, 0.8, 2.3, 2.3, 0.0, 0.0],
-    "name": "Gorou",
-    "energyNeeded": 20
-  },
-  "10000056": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Kujou Sara",
-    "energyNeeded": 20
-  },
-  "10000057": {
-    "weights": [0, 0.2, 0.4, 0.0, 0.8, 1.2, 2.3, 2.3, 0.0, 0.0],
-    "name": "Arataki Itto",
-    "energyNeeded": 20
-  },
-  "10000058": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Yae Miko",
-    "energyNeeded": 20
-  },
-  "10000059": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.2],
-    "name": "Heizou",
-    "energyNeeded": 20
-  },
-  "10000060": {
-    "weights": [0.2, 0, 0, 1.2, 0.0, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Yelan",
-    "energyNeeded": 20
-  },
-  "10000061": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.6],
-    "name": "Kirara",
-    "energyNeeded": 20
-  },
-  "10000062": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Aloy",
-    "energyNeeded": 20
-  },
-  "10000063": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Shenhe",
-    "energyNeeded": 20
-  },
-  "10000064": {
-    "weights": [0, 0, 0.3, 0.0, 0, 0.9, 2.3, 0, 0.0, 0.0],
-    "name": "Yun Jin",
-    "energyNeeded": 20
-  },
-  "10000065": {
-    "weights": [0.2, 0.2, 0, 0.4, 0.8, 0, 0.8, 0.8, 0.0, 2.0],
-    "name": "Kuki",
-    "energyNeeded": 20
-  },
-  "10000066": {
-    "weights": [0.2, 0.2, 0, 0.6, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Ayato",
-    "energyNeeded": 20
-  },
-  "10000067": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.9],
-    "name": "Collei",
-    "energyNeeded": 20
-  },
-  "10000068": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Dori",
-    "energyNeeded": 20
-  },
-  "10000069": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.9],
-    "name": "Tighnari",
-    "energyNeeded": 20
-  },
-  "10000070": {
-    "weights": [0.6, 0, 0, 1.8, 0, 0, 0.6, 0.6, 0.0, 0.4],
-    "name": "Nilou",
-    "energyNeeded": 20
-  },
-  "10000071": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.4],
-    "name": "Cyno",
-    "energyNeeded": 20
-  },
-  "10000072": {
-    "weights": [0.2, 0, 0, 0.4, 0, 0, 2.3, 0, 0.0, 0.0],
-    "name": "Candace",
-    "energyNeeded": 20
-  },
-  "10000073": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.2],
-    "name": "Nahida",
-    "energyNeeded": 20
-  },
-  "10000074": {
-    "weights": [0.4, 0.1, 0, 0.9, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Layla",
-    "energyNeeded": 20
-  },
-  "10000075": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Wanderer",
-    "energyNeeded": 20
-  },
-  "10000076": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Faruzan",
-    "energyNeeded": 20
-  },
-  "10000077": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.4],
-    "name": "Yaoyao",
-    "energyNeeded": 20
-  },
-  "10000078": {
-    "weights": [0, 0.3, 0, 0.0, 0.8, 0, 2.2, 2.3, 0.0, 1.1],
-    "name": "Alhaitham",
-    "energyNeeded": 20
-  },
-  "10000079": {
-    "weights": [0.1, 0.2, 0, 0.4, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Dehya",
-    "energyNeeded": 20
-  },
-  "10000080": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Mika",
-    "energyNeeded": 20
-  },
-  "10000081": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.6],
-    "name": "Kaveh",
-    "energyNeeded": 20
-  },
-  "10000082": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Baizhu",
-    "energyNeeded": 20
-  },
-  "10000083": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Lynette",
-    "energyNeeded": 20
-  },
-  "10000084": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Lyney",
-    "energyNeeded": 20
-  },
-  "10000085": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Freminet",
-    "energyNeeded": 20
-  },
-  "10000086": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Wriothesley",
-    "energyNeeded": 20
-  },
-  "10000087": {
-    "weights": [0.3, 0, 0, 1.2, 0, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Neuvillette",
-    "energyNeeded": 20
-  },
-  "10000088": {
-    "weights": [0.4, 0.2, 0, 0.0, 0.8, 0, 2.3, 0, 0.0, 0.0],
-    "name": "Charlotte",
-    "energyNeeded": 20
-  },
-  "10000089": {
-    "weights": [0.93, 0, 0, 2.78, 0, 0, 1.19, 2.58, 0, 0],
-    "name": "Furina",
-    "energyNeeded": 20
-  },
-  "10000090": {
-    "weights": [0.4, 0.2, 0, 1.2, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Chevreuse",
-    "energyNeeded": 20
-  },
-  "10000091": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Navia",
-    "energyNeeded": 20
-  },
-  "10000092": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.8],
-    "name": "Gaming",
-    "energyNeeded": 20
-  },
-  "10000093": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Xianyun",
-    "energyNeeded": 20
-  },
-  "10000094": {
-    "weights": [0, 0.2, 0.2, 0.0, 0.8, 0.8, 2.3, 2.3, 0.0, 0.0],
-    "name": "Chiori",
-    "energyNeeded": 20
-  },
-  "10000095": {
-    "weights": [0.4, 0, 0, 1.2, 0, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Sigewinne",
-    "energyNeeded": 20
-  },
-  "10000096": {
-    "weights": [0, 0.49, 0, 0, 1.51, 0, 2.95, 2.33, 0.0, 1.33],
-    "name": "Arlecchino",
-    "energyNeeded": 20
-  },
-  "10000097": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.4],
-    "name": "Sethos",
-    "energyNeeded": 20
-  },
-  "10000098": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Clorinde",
-    "energyNeeded": 20
-  },
-  "10000099": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Emilie",
-    "energyNeeded": 20
-  },
-  "10000100": {
-    "weights": [0, 0, 0.2, 0.0, 0, 1.2, 2.3, 2.3, 0.0, 0.0],
-    "name": "Kachina",
-    "energyNeeded": 20
-  },
-  "10000101": {
-    "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0],
-    "name": "Kinich",
-    "energyNeeded": 20
-  },
-  "10000102": {
-    "weights": [0.2, 0, 0, 1.2, 0.8, 0, 2.3, 2.3, 0.0, 1.4],
-    "name": "Mualani",
-    "energyNeeded": 20
-  },
-  "10000103": {
-    "weights": [0, 0, 0.2, 0.0, 0, 0.4, 2.3, 0.4, 0.0, 0.0],
-    "name": "Xilonen",
-    "energyNeeded": 20
-  },
+  "10000005-501": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-1" },
+  "10000005-503": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-3" },
+  "10000005-504": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-4" },
+  "10000005-506": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-6" },
+  "10000005-507": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-7" },
+  "10000005-508": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5-8" },
+  "10000007-701": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-1" },
+  "10000007-703": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-3" },
+  "10000007-704": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-4" },
+  "10000007-706": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-6" },
+  "10000007-707": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-7" },
+  "10000007-708": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7-8" },
+
+  "10000002": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0], "energyNeeded": 20, "name": "Ayaka" },
+  "10000003": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Jean" },
+  "10000005": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 5--" },
+  "10000006": { "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 1.2], "energyNeeded": 20, "name": "Lisa" },
+  "10000007": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Traveler 7--" },
+  "10000014": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Barbara" },
+  "10000015": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Kaeya" },
+  "10000016": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Diluc" },
+  "10000020": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Razor" },
+  "10000021": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Amber" },
+  "10000022": { "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 1.2], "energyNeeded": 20, "name": "Venti" },
+  "10000023": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Xiangling" },
+  "10000024": { "weights": [0, 0.3, 0, 0, 0.5, 1.0, 2.0, 2.0, 0, 0.3], "energyNeeded": 20, "name": "Beidou" },
+  "10000025": { "weights": [0.5, 0.3, 0, 1.2, 0.8, 0, 2.3, 2.3, 0, 0], "energyNeeded": 20, "name": "Xingqiu" },
+  "10000026": { "weights": [0, 0.2, 0, 0, 0.5, 0, 2.4, 2.4, 0, 0], "energyNeeded": 20, "name": "Xiao" },
+  "10000027": { "weights": [0, 0.3, 0, 0, 0.5, 0, 2.0, 2.0, 0, 0], "energyNeeded": 20, "name": "Ningguang" },
+  "10000029": { "weights": [0, 0.3, 0, 0, 1.0, 0, 2.5, 2.5, 0, 0.5], "energyNeeded": 20, "name": "Klee" },
+  "10000030": { "weights": [0, 0.3, 0, 0, 0.5, 1.0, 2.0, 2.0, 0, 0], "energyNeeded": 20, "name": "Zhongli" },
+  "10000031": { "weights": [0, 0.63, 0, 0, 1.41, 0, 2.62, 2.88, 0, 1.43], "energyNeeded": 20, "name": "Fischl" },
+  "10000032": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Bennett" },
+  "10000033": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8], "energyNeeded": 20, "name": "Tartaglia" },
+  "10000034": { "weights": [0, 0.2, 0.6, 0.0, 0.8, 1.2, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Noelle" },
+  "10000035": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Qiqi" },
+  "10000036": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Chongyun" },
+  "10000037": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Ganyu" },
+  "10000038": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Albedo" },
+  "10000039": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Diona" },
+  "10000041": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Mona" },
+  "10000042": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.7], "energyNeeded": 20, "name": "Keqing" },
+  "10000043": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.5], "energyNeeded": 20, "name": "Sucrose" },
+  "10000044": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Xinyan" },
+  "10000045": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Rosaria" },
+  "10000046": { "weights": [0.62, 0.5, 0, 1.88, 1.07, 0, 3.2, 2.16, 0, 2.36], "energyNeeded": 20, "name": "Hu Tao" },
+  "10000047": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.5], "energyNeeded": 20, "name": "Kazuha" },
+  "10000048": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8], "energyNeeded": 20, "name": "Yanfei" },
+  "10000049": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.8], "energyNeeded": 20, "name": "Yoimiya" },
+  "10000050": { "weights": [0, 0.2, 0, 0, 0.8, 0, 0.6, 0.6, 0.0, 2.0], "energyNeeded": 20, "name": "Thoma" },
+  "10000051": { "weights": [0, 0.79, 0, 0, 2.4, 0, 1.57, 2.36, 0, 0], "energyNeeded": 20, "name": "Eula" },
+  "10000052": { "weights": [0, 0.53, 0, 0, 1.34, 0, 2.92, 2.43, 1.1, 0], "energyNeeded": 20, "name": "Raiden" },
+  "10000053": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Sayu" },
+  "10000054": { "weights": [0.3, 0.2, 0, 1.6, 0.8, 0, 0, 0, 0.0, 0.0], "energyNeeded": 20, "name": "Kokomi" },
+  "10000055": { "weights": [0, 0.2, 0.4, 0.0, 0.6, 0.8, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Gorou" },
+  "10000056": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Kujou Sara" },
+  "10000057": { "weights": [0, 0.2, 0.4, 0.0, 0.8, 1.2, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Arataki Itto" },
+  "10000058": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Yae Miko" },
+  "10000059": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.2], "energyNeeded": 20, "name": "Heizou" },
+  "10000060": { "weights": [0.2, 0, 0, 1.2, 0.0, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Yelan" },
+  "10000061": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.6], "energyNeeded": 20, "name": "Kirara" },
+  "10000062": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Aloy" },
+  "10000063": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Shenhe" },
+  "10000064": { "weights": [0, 0, 0.3, 0.0, 0, 0.9, 2.3, 0, 0.0, 0.0], "energyNeeded": 20, "name": "Yun Jin" },
+  "10000065": { "weights": [0.2, 0.2, 0, 0.4, 0.8, 0, 0.8, 0.8, 0.0, 2.0], "energyNeeded": 20, "name": "Kuki" },
+  "10000066": { "weights": [0.2, 0.2, 0, 0.6, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Ayato" },
+  "10000067": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.9], "energyNeeded": 20, "name": "Collei" },
+  "10000068": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Dori" },
+  "10000069": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.9], "energyNeeded": 20, "name": "Tighnari" },
+  "10000070": { "weights": [0.6, 0, 0, 1.8, 0, 0, 0.6, 0.6, 0.0, 0.4], "energyNeeded": 20, "name": "Nilou" },
+  "10000071": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.4], "energyNeeded": 20, "name": "Cyno" },
+  "10000072": { "weights": [0.2, 0, 0, 0.4, 0, 0, 2.3, 0, 0.0, 0.0], "energyNeeded": 20, "name": "Candace" },
+  "10000073": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Nahida" },
+  "10000074": { "weights": [0.4, 0.1, 0, 0.9, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Layla" },
+  "10000075": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Wanderer" },
+  "10000076": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Faruzan" },
+  "10000077": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.4], "energyNeeded": 20, "name": "Yaoyao" },
+  "10000078": { "weights": [0, 0.3, 0, 0.0, 0.8, 0, 2.2, 2.3, 0.0, 1.1], "energyNeeded": 20, "name": "Alhaitham" },
+  "10000079": { "weights": [0.1, 0.2, 0, 0.4, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Dehya" },
+  "10000080": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Mika" },
+  "10000081": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.6], "energyNeeded": 20, "name": "Kaveh" },
+  "10000082": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Baizhu" },
+  "10000083": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Lynette" },
+  "10000084": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Lyney" },
+  "10000085": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Freminet" },
+  "10000086": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Wriothesley" },
+  "10000087": { "weights": [0.3, 0, 0, 1.2, 0, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Neuvillette" },
+  "10000088": { "weights": [0.4, 0.2, 0, 0.0, 0.8, 0, 2.3, 0, 0.0, 0.0], "energyNeeded": 20, "name": "Charlotte" },
+  "10000089": { "weights": [0.93, 0, 0, 2.78, 0, 0, 1.19, 2.58, 0, 0], "energyNeeded": 20, "name": "Furina" },
+  "10000090": { "weights": [0.4, 0.2, 0, 1.2, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Chevreuse" },
+  "10000091": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Navia" },
+  "10000092": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.8], "energyNeeded": 20, "name": "Gaming" },
+  "10000093": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Xianyun" },
+  "10000094": { "weights": [0, 0.2, 0.2, 0.0, 0.8, 0.8, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Chiori" },
+  "10000095": { "weights": [0.4, 0, 0, 1.2, 0, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Sigewinne" },
+  "10000096": { "weights": [0, 0.49, 0, 0, 1.51, 0, 2.95, 2.33, 0.0, 1.33], "energyNeeded": 20, "name": "Arlecchino" },
+  "10000097": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 1.4], "energyNeeded": 20, "name": "Sethos" },
+  "10000098": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Clorinde" },
+  "10000099": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Emilie" },
+  "10000100": { "weights": [0, 0, 0.2, 0.0, 0, 1.2, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Kachina" },
+  "10000101": { "weights": [0, 0.2, 0, 0.0, 0.8, 0, 2.3, 2.3, 0.0, 0.0], "energyNeeded": 20, "name": "Kinich" },
+  "10000102": { "weights": [0.2, 0, 0, 1.2, 0.8, 0, 2.3, 2.3, 0.0, 1.4], "energyNeeded": 20, "name": "Mualani" },
+  "10000103": { "weights": [0, 0, 0.2, 0.0, 0, 0.4, 2.3, 0.4, 0.0, 0.0], "energyNeeded": 20, "name": "Xilonen" },
   "10000104": { "weights": [0.0, 0.2, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Chasca" },
   "10000105": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Ororon" },
   "10000106": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Mavuika" },
@@ -531,6 +125,6 @@
   "10000124": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Jahoda" },
   "10000125": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Damselette" },
   "10000128": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Varka" },
-  "10000131": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Unknown" },
+  "10000131": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Nicole" },
   "10000133": { "weights": [0.0, 0.4, 0.0, 0.0, 1.2, 0.0, 2.3, 2.3, 0.0, 1.2], "energyNeeded": 20, "name": "Marionette" }
 }
